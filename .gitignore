@@ -1,4 +1,6 @@
 *.class
+bin
+.DS_S*
 
 # Package Files #
 *.jar

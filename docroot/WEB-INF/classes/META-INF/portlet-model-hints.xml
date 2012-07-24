@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.organic.model.Warrant">
+		<field name="id" type="long" />
+		<field name="userId" type="long" />
+		<field name="summary" type="String" />
+		<field name="quantity" type="int" />
+		<field name="price" type="long" />
+		<field name="status" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+</model-hints>
