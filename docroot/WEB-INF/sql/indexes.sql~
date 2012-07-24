@@ -1,0 +1,4 @@
+create index IX_3CC5957C on or_Foo (field2);
+
+create index IX_1E844DC3 on warrant (summary, price, quantity, createDate);
+create index IX_67D48B1 on warrant (uuid_);

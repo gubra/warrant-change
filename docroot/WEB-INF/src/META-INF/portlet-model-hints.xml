@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.organic.model.Warrant">
+	<model name="com.warrantchange.model.Warrant">
 		<field name="id" type="long" />
 		<field name="userId" type="long" />
 		<field name="summary" type="String" />

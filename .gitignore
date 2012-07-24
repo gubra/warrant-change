@@ -1,8 +1,2 @@
-*.class
-bin
-.DS_S*
-
-# Package Files #
-*.jar
-*.war
-*.ear
+/test-classes
+/test-results

@@ -7,7 +7,7 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="com.organic.model.impl.WarrantModelImpl">
+	<mapped-superclass class="com.warrantchange.model.impl.WarrantModelImpl">
 		<attributes>
 			<id name="id">
 				<column name="ID_" />
@@ -28,7 +28,7 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<entity class="com.organic.model.impl.WarrantImpl" name="Warrant">
+	<entity class="com.warrantchange.model.impl.WarrantImpl" name="Warrant">
 		<table name="warrant" />
 		<attributes />
 	</entity>
