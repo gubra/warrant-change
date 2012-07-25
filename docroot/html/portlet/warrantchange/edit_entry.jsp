@@ -1,4 +1,5 @@
 
+
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -30,34 +31,9 @@ String content = BeanParamUtil.getString(entry, request, "content");
 
 	<aui:fieldset>
 
-		<aui:input name="title" />
+		<aui:input name="summary" />
 
-		<aui:input name="url" />
-
-		<aui:field-wrapper label="content">
-			<liferay-ui:input-editor editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
-
-			<aui:input name="content" type="hidden" />
-		</aui:field-wrapper>
-
-		<aui:select name="type">
-
-			<%
-			for (String curType : AnnouncementsEntryConstants.TYPES) {
-			%>
-
-				<aui:option label="<%= curType %>" />
-
-			<%
-			}
-			%>
-
-		</aui:select>
-
-		<aui:select name="priority">
-			<aui:option label="normal" value="0" />
-			<aui:option label="important" value="1" />
-		</aui:select>
+		<aui:input name="q" />
 
 		<aui:input name="displayDate" />
 

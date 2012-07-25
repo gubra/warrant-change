@@ -5,9 +5,21 @@
 		<portlet-name>WarrantChange</portlet-name>
 		<display-name>WarrantChange</display-name>
 		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		
+<!-- 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<init-param>
+			<name>view-action</name>
+			<value>/announcements/view</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+ -->		
 		<init-param>
 			<name>view-template</name>
-			<value>/view.jsp</value>
+			<value>/html/portlet/warrantchange/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

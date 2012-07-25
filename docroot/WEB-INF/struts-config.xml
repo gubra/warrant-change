@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+
+	<!-- Forms Beans -->
+
+	<form-beans>
+	</form-beans>
+
+	<!-- Global Forwards -->
+
+	<global-forwards>
+	</global-forwards>
+
+	<!-- Action Mappings -->
+
+	<action-mappings>
+
+		<!-- Announcements -->
+
+		<action path="/warrantchange/edit_entry" type="com.warrantchange.action.EditEntryAction">
+			<forward name="portlet.warrantchange.edit_entry" path="portlet.warrantchange.edit_entry" />
+			<forward name="portlet.warrantchange.error" path="portlet.warrantchange.error" />
+		</action>
+
+		<action path="/warrantchange/view" forward="portlet.warrantchange.view" />
+
+	</action-mappings>
+
+</struts-config>

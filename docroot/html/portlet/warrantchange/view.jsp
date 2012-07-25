@@ -293,11 +293,9 @@ int displayStyle = GetterUtil.getInteger(prefs.getValue("displayStyle", StringPo
 
 languageIds = new String[]{locale.toString()};
 
-
 themeDisplay.setIncludeServiceJs(true);
 
 currentURLObj.setParameter("struts_action", "/warrantchange/view");
-
 
 %>
 
@@ -307,7 +305,7 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 	</c:when>
 	<c:otherwise>
 	
-		<p>UserId:<%= themeDisplay.getUserId() %>
+		<p>Welcome! UserId:<%= themeDisplay.getUserId() %>
 			<liferay-ui:language languageIds="<%= languageIds %>" displayStyle="<%= displayStyle %>" />
 		</p>
 		<p><%= greeting %></p>
@@ -329,14 +327,16 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 		
 				headerNames.add("summary");
 				headerNames.add("quantity");
-				headerNames.add("modified-date");
-				headerNames.add("create-date");
 				headerNames.add("price");
+				headerNames.add("create-date");
+				headerNames.add("modified-date");
 				headerNames.add(StringPool.BLANK);
 		
 				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, headerNames, "no-entries-were-found");
 		
 				int total = WarrantLocalServiceUtil.getWarrantsCount();
+				
+				System.out.println(total);
 		
 				searchContainer.setTotal(total);
 		
@@ -370,17 +370,15 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 					
 					// Modified date
 					row.addText(dateFormatDate.format(entry.getModifiedDate()), rowURL);
+					/* row.addText(DateFormat.getModifiedDate(), rowURL); */
 		
 					// Create date
 					row.addText(dateFormatDate.format(entry.getCreateDate()), rowURL);
 					
-		
 					// Action
-		
-					row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/warrantchange/view_manage_entries_entry_action.jsp");
+					row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/warrantchange/entry_action.jspf");
 		
 					// Add result row
-		
 					resultRows.add(row);
 				}
 				%>
