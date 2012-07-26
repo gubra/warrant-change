@@ -1,6 +1,4 @@
-
-<%@page import="com.liferay.util.NumberFormatUtil"%>
-<%@page import="com.liferay.portal.service.UserLocalServiceUtil"%>
+<%@page import="com.liferay.counter.service.CounterLocalServiceUtil"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -124,6 +122,71 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 <%@page import="com.liferay.portlet.PortletURLUtil" %>
 <%@page import="com.warrantchange.service.*" %>
 <%@page import="com.warrantchange.model.*" %>
+<%@
+page import="com.liferay.portal.util.PortletKeys" %>
+<%-- <%@
+page import="com.liferay.portal.model.*" %><%@
+page import="com.liferay.portal.model.impl.*" %><%@
+page import="com.liferay.portal.security.auth.AuthTokenUtil" %><%@
+page import="com.liferay.portal.security.auth.PrincipalException" %><%@
+page import="com.liferay.portal.security.permission.ActionKeys" %><%@
+page import="com.liferay.portal.security.permission.PermissionChecker" %><%@
+page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
+page import="com.liferay.portal.service.*" %><%@
+page import="com.liferay.portal.service.permission.GroupPermissionUtil" %><%@
+page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %><%@
+page import="com.liferay.portal.service.permission.LayoutPrototypePermissionUtil" %><%@
+page import="com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil" %><%@
+page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
+page import="com.liferay.portal.struts.StrutsUtil" %><%@
+page import="com.liferay.portal.theme.PortletDisplay" %><%@
+page import="com.liferay.portal.theme.ThemeDisplay" %><%@
+page import="com.liferay.portal.util.CookieKeys" %><%@
+page import="com.liferay.portal.util.JavaScriptBundleUtil" %><%@
+page import="com.liferay.portal.util.Portal" %><%@
+page import="com.liferay.portal.util.PortalUtil" %><%@
+page import="com.liferay.portal.util.PortletCategoryKeys" %><%@
+page import="com.liferay.portal.util.PortletKeys" %><%@
+page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
+page import="com.liferay.portal.util.PropsUtil" %><%@
+page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.portal.util.SessionClicks" %><%@
+page import="com.liferay.portal.util.SessionTreeJSClicks" %><%@
+page import="com.liferay.portal.util.ShutdownUtil" %><%@
+page import="com.liferay.portal.util.WebAppPool" %><%@
+page import="com.liferay.portal.util.WebKeys" %><%@
+page import="com.liferay.portal.util.comparator.PortletCategoryComparator" %><%@
+page import="com.liferay.portal.util.comparator.PortletTitleComparator" %><%@
+page import="com.liferay.portal.webserver.WebServerServletTokenUtil" %><%@
+page import="com.liferay.portlet.InvokerPortlet" %><%@
+page import="com.liferay.portlet.PortalPreferences" %><%@
+page import="com.liferay.portlet.PortletConfigFactoryUtil" %><%@
+page import="com.liferay.portlet.PortletInstanceFactoryUtil" %><%@
+page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
+page import="com.liferay.portlet.PortletResponseImpl" %><%@
+page import="com.liferay.portlet.PortletSetupUtil" %><%@
+page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
+page import="com.liferay.portlet.PortletURLImpl" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %><%@
+page import="com.liferay.portlet.RenderParametersPool" %><%@
+page import="com.liferay.portlet.RenderRequestFactory" %><%@
+page import="com.liferay.portlet.RenderRequestImpl" %><%@
+page import="com.liferay.portlet.RenderResponseFactory" %><%@
+page import="com.liferay.portlet.RenderResponseImpl" %><%@
+page import="com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil" %><%@
+page import="com.liferay.util.ContentUtil" %><%@
+page import="com.liferay.util.CreditCard" %><%@
+page import="com.liferay.util.Encryptor" %><%@
+page import="com.liferay.util.JS" %><%@
+page import="com.liferay.util.PKParser" %><%@
+page import="com.liferay.util.PwdGenerator" %><%@
+page import="com.liferay.util.State" %><%@
+page import="com.liferay.util.StateUtil" %><%@
+page import="com.liferay.util.UniqueList" %><%@
+page import="com.liferay.util.log4j.Levels" %><%@
+page import="com.liferay.util.portlet.PortletRequestUtil" %><%@
+page import="com.liferay.util.servlet.DynamicServletRequest" %><%@
+page import="com.liferay.util.xml.XMLFormatter" %> --%>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -176,7 +239,7 @@ page import="javax.portlet.WindowState" %>
 
 <portlet:defineObjects />
 
-<% 
+<%
 WindowState windowState = null;
 PortletMode portletMode = null;
 PortletURL currentURLObj = null;
@@ -184,17 +247,19 @@ PortletURL currentURLObj = null;
 windowState = renderRequest.getWindowState();
 portletMode = renderRequest.getPortletMode();
 
-if(!portletMode.equals(PortletMode.VIEW)){
-	return;
-}
-	
 currentURLObj = PortletURLUtil.getCurrent(renderRequest, renderResponse);
 String currentURL = currentURLObj.toString();
 
-PortletPreferences prefs = renderRequest.getPreferences(); 
-String greeting = (String)prefs.getValue( "greeting", "List of available Warrants"); 
+String redirect = ParamUtil.getString(request, "redirect");
 
-String portletResource = ParamUtil.getString(request, "portletResource");
+long entryId = ParamUtil.getLong(request, "entryId");
+
+Warrant entry = null;
+if (entryId == 0){
+	//entry = WarrantLocalServiceUtil.createWarrant(CounterLocalServiceUtil.increment());
+}else{
+	entry = (Warrant)WarrantLocalServiceUtil.getWarrant(entryId);
+}
 
 ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
 
@@ -204,22 +269,6 @@ if(user != null){
 	locale = user.getLocale();
 }
 
-TimeZone timeZone = TimeZoneUtil.getDefault();
-
-Format dateFormatDate = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-
-Locale[] availableLocales = LanguageUtil.getAvailableLocales();
-String[] availableLanguageIds = LocaleUtil.toLanguageIds(availableLocales);
- 
-String[] languageIds = StringUtil.split(prefs.getValue("languageIds", StringUtil.merge(availableLanguageIds)));
-int displayStyle = GetterUtil.getInteger(prefs.getValue("displayStyle", StringPool.BLANK));
-
-languageIds = new String[]{locale.toString()};
-
-themeDisplay.setIncludeServiceJs(true);
-
-currentURLObj.setParameter("struts_action", "/warrantchange/view");
-
 %>
 
 <c:choose>
@@ -227,111 +276,94 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 		<p> You have to Login to use the Warrant Change page!</p>
 	</c:when>
 	<c:otherwise>
-	
-		<p>Welcome! UserId:<%= themeDisplay.getUserId() %>
-			<liferay-ui:language languageIds="<%= languageIds %>" displayStyle="<%= displayStyle %>" />
-		</p>
-		<p><%= greeting %></p>
-		
-		<aui:form action="<%= currentURLObj.toString() %>" method="post" name="fm">
 
-			<aui:button onClick='<%= renderResponse.getNamespace() + "addEntry()" %>' value="add-entry" />
-		
-				<div class="separator"><!-- --></div>
-		
-				<%
-				PortletURL iteratorURL = PortletURLUtil.clone(currentURLObj, renderResponse);
-		
-				List<String> headerNames = new ArrayList<String>();
-		
-				headerNames.add("userId");
-				headerNames.add("country");
-				headerNames.add("summary");
-				headerNames.add("quantity");
-				headerNames.add("price");
-				headerNames.add("sent");
-				headerNames.add("modified");
-				headerNames.add(StringPool.BLANK);
-		
-				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, headerNames, "no-entries-were-found");
-		
-				int total = WarrantLocalServiceUtil.getWarrantsCount();
-				
-				System.out.println(total);
-		
-				searchContainer.setTotal(total);
-		
-				List<Warrant> results = WarrantLocalServiceUtil.findWarrants(searchContainer.getStart(), searchContainer.getEnd());
-		
-				searchContainer.setResults(results);
-		
-				List resultRows = searchContainer.getResultRows();
-		
-				for (int i = 0; i < results.size(); i++) {
-					Warrant entry = results.get(i);
-		
-					entry = entry.toEscapedModel();
-					
-					User u = UserLocalServiceUtil.getUser(entry.getUserId());
-		
-					ResultRow row = new ResultRow(entry, entry.getId(), i);
-					
-					PortletURL deleteURL = renderResponse.createActionURL();
-					
-					deleteURL.setParameter("redirect", currentURL);
-					deleteURL.setParameter(Constants.CMD, Constants.DELETE);
-					deleteURL.setParameter("entryId", String.valueOf(entry.getId()));
-					
-					PortletURL rowURL = renderResponse.createRenderURL();
-		
-					rowURL.setParameter("jspPage", "/html/portlet/warrantchange/edit.jsp");
-					/* rowURL.setParameter("struts_action", "/warrantchange/edit_entry"); */
-					rowURL.setParameter("redirect", currentURL);
-					rowURL.setParameter("entryId", String.valueOf(entry.getId()));
-		
-					// UserId
-					row.addText(String.valueOf(entry.getUserId()), rowURL);
-					
-					//Country
-					//request.setAttribute("languageIds", u.getLocale().getLanguage());
-					//row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "html/taglib/ui/language/page.jsp",);
-					row.addText(u.getLocale().getDisplayCountry(), rowURL);
-					
-					// Summ
-					row.addText(entry.getSummary(), rowURL);
-		
-					// Qty
-					row.addText(String.valueOf(entry.getQuantity()), rowURL);
-		
-					//Price
-					row.addText(NumberFormat.getCurrencyInstance(u.getLocale()).format(entry.getPrice()), rowURL);
-					
-					// Modified date
-					row.addText(dateFormatDate.format(entry.getModifiedDate()), rowURL);
-					/* row.addText(DateFormat.getModifiedDate(), rowURL); */
-		
-					// Create date
-					row.addText(dateFormatDate.format(entry.getCreateDate()), rowURL);
-					
-					// Action
-					row.addButton("right", SearchEntry.DEFAULT_VALIGN, "Delete", rowURL.toString());
-					//row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "entry_action.jspf");
-		
-					// Add result row
-					resultRows.add(row);
+<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
+	<aui:input name="alert" type="hidden" value="<%= portletName.equals(PortletKeys.ALERTS) %>" />
+
+	<liferay-ui:header
+		backURL="<%= redirect %>"
+		title="entry"
+	/>
+
+	<c:choose>
+	<c:when test="<%= user.getUserId() != entry.getUserId() %>">
+		<aui:fieldset>
+
+		<aui:input name="mailMessage">
+			<aui:validator name="required"/>
+		</aui:input>
+		</aui:fieldset>
+		<aui:button-row>
+		<aui:button type="submit" name="send" value="Send"/>
+
+		<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</c:when>
+	<c:otherwise>
+
+	<aui:model-context bean="<%= entry %>" model="<%= Warrant.class %>" />
+
+	<aui:fieldset>
+
+		<aui:input name="summary">
+			<aui:validator name="required"/>
+		</aui:input>
+
+		<aui:input name="quantity">
+			<aui:validator name="custom" errorMessage="quantity-must-be-number-div-by-ten">
+				function(val, fieldNode, ruleValue) { 
+					var inp = Number(val);
+					if(inp == NaN || ((inp % 10) != 0)){
+						return false;
+					}
+					return true;
 				}
-				%>
-		
-				<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+			</aui:validator>
+		</aui:input>
 
-		</aui:form>
+		<aui:input name="price">
+			<aui:validator name="custom" errorMessage="quantity-must-be-number-greater-then-zero">
+				function(val, fieldNode, ruleValue) { 
+					var inp = Number(val);
+					if(inp == NaN || (0 >= inp){
+						return false;
+					}
+					return true;
+				}
+			</aui:validator>
+		</aui:input>
 		
-		<aui:script>
-			function <portlet:namespace />addEntry() {
-				location.href = '<portlet:renderURL> <portlet:param name="jspPage" value="/html/portlet/warrantchange/edit.jsp" /><portlet:param name="struts_action" value="/warrantchange/edit_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';
-			}
-		</aui:script>
-	
+	</aui:fieldset>
+
+	<aui:button-row>
+		<aui:button type="submit" />
+
+		<aui:button href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 	</c:otherwise>
-</c:choose>
+	</c:choose>
+</aui:form>
 
+<portlet:renderURL var="viewURL"> <portlet:param name="jspPage" value="/html/portlet/warrantchange/view.jsp" /> </portlet:renderURL>
+
+<p><a href="<%= viewURL %>">&larr; Back</a></p>
+
+<aui:script>
+
+	function <portlet:namespace />saveEntry() {
+		document.<portlet:namespace />fm.action = '<portlet:actionURL><portlet:param name="struts_action" value="/warrantchange/edit_entry" /></portlet:actionURL>';
+		document.<portlet:namespace />fm.target = '';
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (user.getUserId() != entry.getUserId()) ? Constants.SEND : ((entry == null) ? Constants.ADD : Constants.UPDATE) %>";
+		submitForm(document.<portlet:namespace />fm);
+	}
+
+	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
+		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />summary);
+	</c:if>
+</aui:script>
+
+</c:otherwise>
+</c:choose>

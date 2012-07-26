@@ -3,7 +3,8 @@
 	<tr>
 			<td class="edit-entry">
 				<portlet:renderURL var="editURL">
-					<portlet:param name="struts_action" value="/warrantchange/edit_entry" />
+					<portlet:param name="jspPage" value="/html/portlet/warrantchange/edit.jsp" />
+					<!-- <portlet:param name="struts_action" value="/warrantchange/edit_entry" /> -->
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="entryId" value="<%= String.valueOf(entry.Id()) %>" />
 				</portlet:renderURL>
