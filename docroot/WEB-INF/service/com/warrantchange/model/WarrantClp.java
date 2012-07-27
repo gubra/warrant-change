@@ -132,6 +132,18 @@ public class WarrantClp extends BaseModelImpl<Warrant> implements Warrant {
 		_modifiedDate = modifiedDate;
 	}
 
+	public boolean getExpirationWarningSent() {
+		return _expirationWarningSent;
+	}
+
+	public boolean isExpirationWarningSent() {
+		return _expirationWarningSent;
+	}
+
+	public void setExpirationWarningSent(boolean expirationWarningSent) {
+		_expirationWarningSent = expirationWarningSent;
+	}
+
 	public void persist() throws SystemException {
 		if (this.isNew()) {
 			WarrantLocalServiceUtil.addWarrant(this);
@@ -159,6 +171,7 @@ public class WarrantClp extends BaseModelImpl<Warrant> implements Warrant {
 		clone.setStatus(getStatus());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
+		clone.setExpirationWarningSent(getExpirationWarningSent());
 
 		return clone;
 	}
@@ -209,7 +222,7 @@ public class WarrantClp extends BaseModelImpl<Warrant> implements Warrant {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -227,13 +240,15 @@ public class WarrantClp extends BaseModelImpl<Warrant> implements Warrant {
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", expirationWarningSent=");
+		sb.append(getExpirationWarningSent());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.warrantchange.model.Warrant");
@@ -271,6 +286,10 @@ public class WarrantClp extends BaseModelImpl<Warrant> implements Warrant {
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expirationWarningSent</column-name><column-value><![CDATA[");
+		sb.append(getExpirationWarningSent());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -286,4 +305,5 @@ public class WarrantClp extends BaseModelImpl<Warrant> implements Warrant {
 	private String _status;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _expirationWarningSent;
 }

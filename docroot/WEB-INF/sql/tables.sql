@@ -6,5 +6,6 @@ create table warrant (
 	price LONG,
 	status VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null
+	modifiedDate DATE null,
+	expirationWarningSent BOOLEAN
 );

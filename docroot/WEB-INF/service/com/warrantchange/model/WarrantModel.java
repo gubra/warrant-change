@@ -189,6 +189,27 @@ public interface WarrantModel extends BaseModel<Warrant> {
 	 */
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the expiration warning sent of this Warrant.
+	 *
+	 * @return the expiration warning sent of this Warrant
+	 */
+	public boolean getExpirationWarningSent();
+
+	/**
+	 * Returns <code>true</code> if this Warrant is expiration warning sent.
+	 *
+	 * @return <code>true</code> if this Warrant is expiration warning sent; <code>false</code> otherwise
+	 */
+	public boolean isExpirationWarningSent();
+
+	/**
+	 * Sets whether this Warrant is expiration warning sent.
+	 *
+	 * @param expirationWarningSent the expiration warning sent of this Warrant
+	 */
+	public void setExpirationWarningSent(boolean expirationWarningSent);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

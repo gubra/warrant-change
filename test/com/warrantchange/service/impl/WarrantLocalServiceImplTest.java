@@ -1,7 +1,5 @@
 package com.warrantchange.service.impl;
 
-import org.junit.Assert;
-
 import com.liferay.portal.service.persistence.BasePersistenceTestCase;
 import com.warrantchange.model.Warrant;
 import com.warrantchange.service.WarrantLocalServiceUtil;

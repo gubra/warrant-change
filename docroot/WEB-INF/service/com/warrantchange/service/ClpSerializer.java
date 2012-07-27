@@ -190,6 +190,13 @@ public class ClpSerializer {
 
 				method7.invoke(newModel, value7);
 
+				Method method8 = newModelClass.getMethod("setExpirationWarningSent",
+						new Class[] { Boolean.TYPE });
+
+				Boolean value8 = new Boolean(oldCplModel.getExpirationWarningSent());
+
+				method8.invoke(newModel, value8);
+
 				return newModel;
 			}
 			catch (Exception e) {
@@ -312,6 +319,14 @@ public class ClpSerializer {
 				Date value7 = (Date)method7.invoke(oldModel, (Object[])null);
 
 				newModel.setModifiedDate(value7);
+
+				Method method8 = oldModelClass.getMethod(
+						"getExpirationWarningSent");
+
+				Boolean value8 = (Boolean)method8.invoke(oldModel,
+						(Object[])null);
+
+				newModel.setExpirationWarningSent(value8);
 
 				return newModel;
 			}

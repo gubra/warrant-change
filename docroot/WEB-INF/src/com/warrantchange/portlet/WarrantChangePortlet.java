@@ -9,10 +9,12 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException; 
 import javax.portlet.PortletPreferences;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -31,7 +33,7 @@ import com.warrantchange.service.WarrantLocalServiceUtil;
 
 public class WarrantChangePortlet extends MVCPortlet {
 
-	private static Log _log = LogFactoryUtil.getLog(WarrantChangePortlet.class);
+	private static final Log _log = LogFactory.getLog(WarrantChangePortlet.class);
 
 	public WarrantChangePortlet() {
 	}
@@ -40,18 +42,21 @@ public class WarrantChangePortlet extends MVCPortlet {
 	public void processAction(ActionRequest actionRequest, 
 			ActionResponse actionResponse) throws IOException, PortletException {
 		
-		_log.debug(actionRequest);
+		_log.debug("processAction() -> "+actionRequest);
 		
 		PortletPreferences prefs = actionRequest.getPreferences(); 
 		
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 		
+		_log.debug("cmd() -> "+cmd);
+		
 		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateEntry(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
+			if (cmd.equals(Constants.DELETE )) {
 				deleteEntry(actionRequest);
+			}
+			else if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				
+				updateEntry(actionRequest);
 			}else if(cmd.equals(Constants.SEND)) {
 				send(actionRequest);
 			}
@@ -59,6 +64,8 @@ public class WarrantChangePortlet extends MVCPortlet {
 			String redirect = PortalUtil.escapeRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));
 
+			_log.debug("redirect: "+redirect);
+			
 			if (Validator.isNotNull(redirect)) {
 				actionResponse.sendRedirect(redirect);
 			}

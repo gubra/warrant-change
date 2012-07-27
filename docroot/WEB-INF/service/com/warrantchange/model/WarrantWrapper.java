@@ -220,6 +220,33 @@ public class WarrantWrapper implements Warrant, ModelWrapper<Warrant> {
 		_warrant.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	* Returns the expiration warning sent of this Warrant.
+	*
+	* @return the expiration warning sent of this Warrant
+	*/
+	public boolean getExpirationWarningSent() {
+		return _warrant.getExpirationWarningSent();
+	}
+
+	/**
+	* Returns <code>true</code> if this Warrant is expiration warning sent.
+	*
+	* @return <code>true</code> if this Warrant is expiration warning sent; <code>false</code> otherwise
+	*/
+	public boolean isExpirationWarningSent() {
+		return _warrant.isExpirationWarningSent();
+	}
+
+	/**
+	* Sets whether this Warrant is expiration warning sent.
+	*
+	* @param expirationWarningSent the expiration warning sent of this Warrant
+	*/
+	public void setExpirationWarningSent(boolean expirationWarningSent) {
+		_warrant.setExpirationWarningSent(expirationWarningSent);
+	}
+
 	public boolean isNew() {
 		return _warrant.isNew();
 	}

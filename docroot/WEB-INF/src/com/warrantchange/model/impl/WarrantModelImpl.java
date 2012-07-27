@@ -72,9 +72,10 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 			{ "price", Types.BIGINT },
 			{ "status", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "expirationWarningSent", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table warrant (id_ LONG not null primary key,userId LONG,summary VARCHAR(75) null,quantity INTEGER,price LONG,status VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table warrant (id_ LONG not null primary key,userId LONG,summary VARCHAR(75) null,quantity INTEGER,price LONG,status VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,expirationWarningSent BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table warrant";
 	public static final String ORDER_BY_JPQL = " ORDER BY warrant.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY warrant.createDate DESC";
@@ -110,6 +111,7 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 		model.setStatus(soapModel.getStatus());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setExpirationWarningSent(soapModel.getExpirationWarningSent());
 
 		return model;
 	}
@@ -270,6 +272,19 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
+	public boolean getExpirationWarningSent() {
+		return _expirationWarningSent;
+	}
+
+	public boolean isExpirationWarningSent() {
+		return _expirationWarningSent;
+	}
+
+	public void setExpirationWarningSent(boolean expirationWarningSent) {
+		_expirationWarningSent = expirationWarningSent;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -312,6 +327,7 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 		warrantImpl.setStatus(getStatus());
 		warrantImpl.setCreateDate(getCreateDate());
 		warrantImpl.setModifiedDate(getModifiedDate());
+		warrantImpl.setExpirationWarningSent(getExpirationWarningSent());
 
 		warrantImpl.resetOriginalValues();
 
@@ -419,12 +435,14 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 			warrantCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		warrantCacheModel.expirationWarningSent = getExpirationWarningSent();
+
 		return warrantCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -442,13 +460,15 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", expirationWarningSent=");
+		sb.append(getExpirationWarningSent());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.warrantchange.model.Warrant");
@@ -486,6 +506,10 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>expirationWarningSent</column-name><column-value><![CDATA[");
+		sb.append(getExpirationWarningSent());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -507,6 +531,7 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 	private Date _createDate;
 	private Date _originalCreateDate;
 	private Date _modifiedDate;
+	private boolean _expirationWarningSent;
 	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Warrant _escapedModelProxy;

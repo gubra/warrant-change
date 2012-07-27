@@ -248,7 +248,7 @@ public interface WarrantLocalService extends PersistedModelLocalService {
 
 	public java.util.List<com.warrantchange.model.Warrant> findWarrants();
 
-	public java.util.List<com.warrantchange.model.Warrant> findWarrantsCreatedBefore(
-		java.util.Date before)
+	public java.util.List<com.warrantchange.model.Warrant> findWarrantsByCreateDate(
+		java.util.Date from, java.util.Date to)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -20,6 +20,7 @@
         <column name="status" type="String"></column>
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
+		<column name="expirationWarningSent" type="boolean"></column>
 
 		<!-- Other fields -->
 

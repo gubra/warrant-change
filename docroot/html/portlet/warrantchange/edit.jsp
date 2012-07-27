@@ -289,7 +289,7 @@ if(user != null){
 	/>
 
 	<c:choose>
-	<c:when test="<%= user.getUserId() != entry.getUserId() %>">
+	<c:when test="<%= entry != null && (user.getUserId() != entry.getUserId()) %>">
 		<aui:fieldset>
 
 		<aui:input name="mailMessage">
@@ -325,15 +325,7 @@ if(user != null){
 		</aui:input>
 
 		<aui:input name="price">
-			<aui:validator name="custom" errorMessage="quantity-must-be-number-greater-then-zero">
-				function(val, fieldNode, ruleValue) { 
-					var inp = Number(val);
-					if(inp == NaN || (0 >= inp){
-						return false;
-					}
-					return true;
-				}
-			</aui:validator>
+			<aui:validator name="required"/>
 		</aui:input>
 		
 	</aui:fieldset>
@@ -342,6 +334,7 @@ if(user != null){
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
+		
 	</aui:button-row>
 	</c:otherwise>
 	</c:choose>
@@ -356,7 +349,14 @@ if(user != null){
 	function <portlet:namespace />saveEntry() {
 		document.<portlet:namespace />fm.action = '<portlet:actionURL><portlet:param name="struts_action" value="/warrantchange/edit_entry" /></portlet:actionURL>';
 		document.<portlet:namespace />fm.target = '';
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (user.getUserId() != entry.getUserId()) ? Constants.SEND : ((entry == null) ? Constants.ADD : Constants.UPDATE) %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry != null && (user.getUserId() != entry.getUserId())) ? Constants.SEND : ((entry == null) ? Constants.ADD : Constants.UPDATE) %>";
+		submitForm(document.<portlet:namespace />fm);
+	}
+	
+	function deleteEntry() {
+		document.<portlet:namespace />fm.action = '<portlet:actionURL><portlet:param name="struts_action" value="/warrantchange/edit_entry" /></portlet:actionURL>';
+		document.<portlet:namespace />fm.target = '';
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
 		submitForm(document.<portlet:namespace />fm);
 	}
 
@@ -367,3 +367,4 @@ if(user != null){
 
 </c:otherwise>
 </c:choose>
+

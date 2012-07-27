@@ -10,5 +10,6 @@
 		<field name="status" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="expirationWarningSent" type="boolean" />
 	</model>
 </model-hints>

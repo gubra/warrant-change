@@ -39,6 +39,7 @@ public class WarrantSoap implements Serializable {
 		soapModel.setStatus(model.getStatus());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setExpirationWarningSent(model.getExpirationWarningSent());
 
 		return soapModel;
 	}
@@ -155,6 +156,18 @@ public class WarrantSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public boolean getExpirationWarningSent() {
+		return _expirationWarningSent;
+	}
+
+	public boolean isExpirationWarningSent() {
+		return _expirationWarningSent;
+	}
+
+	public void setExpirationWarningSent(boolean expirationWarningSent) {
+		_expirationWarningSent = expirationWarningSent;
+	}
+
 	private long _id;
 	private long _userId;
 	private String _summary;
@@ -163,4 +176,5 @@ public class WarrantSoap implements Serializable {
 	private String _status;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _expirationWarningSent;
 }

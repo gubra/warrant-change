@@ -34,7 +34,7 @@ import java.util.Date;
 public class WarrantCacheModel implements CacheModel<Warrant>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -52,6 +52,8 @@ public class WarrantCacheModel implements CacheModel<Warrant>, Serializable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", expirationWarningSent=");
+		sb.append(expirationWarningSent);
 		sb.append("}");
 
 		return sb.toString();
@@ -94,6 +96,8 @@ public class WarrantCacheModel implements CacheModel<Warrant>, Serializable {
 			warrantImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		warrantImpl.setExpirationWarningSent(expirationWarningSent);
+
 		warrantImpl.resetOriginalValues();
 
 		return warrantImpl;
@@ -107,4 +111,5 @@ public class WarrantCacheModel implements CacheModel<Warrant>, Serializable {
 	public String status;
 	public long createDate;
 	public long modifiedDate;
+	public boolean expirationWarningSent;
 }

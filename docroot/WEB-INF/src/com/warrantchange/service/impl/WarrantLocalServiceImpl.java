@@ -43,6 +43,7 @@ import com.warrantchange.service.persistence.WarrantUtil;
  * @see com.warrantchange.service.WarrantLocalServiceUtil
  */
 public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
+	
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,7 +61,7 @@ public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
 		warrant.setStatus(WarrantStateType.CREATED.name());
 		warrant.setCreateDate(now);
 		warrant.setModifiedDate(now);
-		return WarrantLocalServiceUtil.addWarrant(warrant);
+		return WarrantUtil.update(warrant, true);
 	}
 	
 	public void updateWarrant(long id, String summary, int quantity, long price) throws NoSuchWarrantException, SystemException {
@@ -74,7 +75,7 @@ public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
 	
 	public Warrant updateWarrant(Warrant warrant) throws SystemException {
 		warrant.setModifiedDate(new Date());
-		return WarrantLocalServiceUtil.updateWarrant(warrant);
+		return WarrantUtil.update(warrant, true);
 	}
 	
 	public List<Warrant> findWarrants(int start, int count) throws SystemException {
@@ -83,19 +84,31 @@ public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
 	
 	public void deleteWarrant(long id) throws NoSuchWarrantException, SystemException {
 		Warrant warrant = WarrantUtil.findByPrimaryKey(id);
+		deleteWarrant(warrant);
+	}
+	
+	@Override
+	public void deleteWarrant(Warrant warrant) throws SystemException {
 		warrant.setStatus(WarrantStateType.DELETED.name());
 		warrant.setModifiedDate(new Date());
-		WarrantLocalServiceUtil.updateWarrant(warrant);
+		updateWarrant(warrant);
 	}
-
+	
 	public List<Warrant> findWarrants() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	public List<Warrant> findWarrantsCreatedBefore(Date before) throws SystemException {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Warrant.class).add(RestrictionsFactoryUtil.le("createDate", before))
-				.add(RestrictionsFactoryUtil.eq("status", WarrantStateType.CREATED.name()));
+	public List<Warrant> findWarrantsByCreateDate(Date from, Date to) throws SystemException {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Warrant.class)
+				.add(RestrictionsFactoryUtil.eq("status", WarrantStateType.CREATED.name()))
+				.add(RestrictionsFactoryUtil.eq("expirationWarningSent", false));
+		if (from != null) {
+			dynamicQuery = dynamicQuery.add(RestrictionsFactoryUtil.gt("createDate", from));
+		}
+		if (to != null) {
+			dynamicQuery = dynamicQuery.add(RestrictionsFactoryUtil.le("createDate", to));
+		}
 		return WarrantUtil.findWithDynamicQuery(dynamicQuery);
 	}
 }

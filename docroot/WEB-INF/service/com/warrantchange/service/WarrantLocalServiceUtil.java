@@ -282,10 +282,10 @@ public class WarrantLocalServiceUtil {
 		return getService().findWarrants();
 	}
 
-	public static java.util.List<com.warrantchange.model.Warrant> findWarrantsCreatedBefore(
-		java.util.Date before)
+	public static java.util.List<com.warrantchange.model.Warrant> findWarrantsByCreateDate(
+		java.util.Date from, java.util.Date to)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().findWarrantsCreatedBefore(before);
+		return getService().findWarrantsByCreateDate(from, to);
 	}
 
 	public static void clearService() {

@@ -98,8 +98,9 @@ public class WarrantLocalServiceClp implements WarrantLocalService {
 		_findWarrantsMethodKey20 = new MethodKey(_classLoaderProxy.getClassName(),
 				"findWarrants");
 
-		_findWarrantsCreatedBeforeMethodKey21 = new MethodKey(_classLoaderProxy.getClassName(),
-				"findWarrantsCreatedBefore", java.util.Date.class);
+		_findWarrantsByCreateDateMethodKey21 = new MethodKey(_classLoaderProxy.getClassName(),
+				"findWarrantsByCreateDate", java.util.Date.class,
+				java.util.Date.class);
 	}
 
 	public com.warrantchange.model.Warrant addWarrant(
@@ -673,13 +674,14 @@ public class WarrantLocalServiceClp implements WarrantLocalService {
 		return (java.util.List<com.warrantchange.model.Warrant>)ClpSerializer.translateOutput(returnObj);
 	}
 
-	public java.util.List<com.warrantchange.model.Warrant> findWarrantsCreatedBefore(
-		java.util.Date before)
+	public java.util.List<com.warrantchange.model.Warrant> findWarrantsByCreateDate(
+		java.util.Date from, java.util.Date to)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_findWarrantsCreatedBeforeMethodKey21,
-				ClpSerializer.translateInput(before));
+		MethodHandler methodHandler = new MethodHandler(_findWarrantsByCreateDateMethodKey21,
+				ClpSerializer.translateInput(from),
+				ClpSerializer.translateInput(to));
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -727,5 +729,5 @@ public class WarrantLocalServiceClp implements WarrantLocalService {
 	private MethodKey _updateWarrantMethodKey18;
 	private MethodKey _findWarrantsMethodKey19;
 	private MethodKey _findWarrantsMethodKey20;
-	private MethodKey _findWarrantsCreatedBeforeMethodKey21;
+	private MethodKey _findWarrantsByCreateDateMethodKey21;
 }

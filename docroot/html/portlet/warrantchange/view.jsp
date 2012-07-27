@@ -224,7 +224,7 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 
 <c:choose>
 	<c:when test="<%= !themeDisplay.isSignedIn() %>">
-		<p> You have to Login to use the Warrant Change page!</p>
+		<p> You have to Login to use the Warrant Change application!</p>
 	</c:when>
 	<c:otherwise>
 	
@@ -251,13 +251,11 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 				headerNames.add("price");
 				headerNames.add("sent");
 				headerNames.add("modified");
-				headerNames.add(StringPool.BLANK);
+				
 		
 				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, headerNames, "no-entries-were-found");
 		
 				int total = WarrantLocalServiceUtil.getWarrantsCount();
-				
-				System.out.println(total);
 		
 				searchContainer.setTotal(total);
 		
@@ -314,7 +312,7 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 					row.addText(dateFormatDate.format(entry.getCreateDate()), rowURL);
 					
 					// Action
-					row.addButton("right", SearchEntry.DEFAULT_VALIGN, "Delete", rowURL.toString());
+					//row.addText("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL);
 					//row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "entry_action.jspf");
 		
 					// Add result row

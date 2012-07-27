@@ -4,7 +4,7 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>WarrantChange</portlet-name>
-		<icon>/icon.png</icon>
+		<icon>/warranty_icon_tr.png</icon>
 		<!-- <struts-path>warrantchange</struts-path> -->
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.warrantchange.job.EmailNotifierJob</scheduler-event-listener-class>

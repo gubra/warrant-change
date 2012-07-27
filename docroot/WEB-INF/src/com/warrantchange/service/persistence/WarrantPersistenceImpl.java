@@ -386,6 +386,7 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 		warrantImpl.setStatus(warrant.getStatus());
 		warrantImpl.setCreateDate(warrant.getCreateDate());
 		warrantImpl.setModifiedDate(warrant.getModifiedDate());
+		warrantImpl.setExpirationWarningSent(warrant.isExpirationWarningSent());
 
 		return warrantImpl;
 	}
