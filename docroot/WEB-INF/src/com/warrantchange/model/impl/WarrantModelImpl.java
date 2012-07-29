@@ -92,7 +92,8 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 				"value.object.column.bitmask.enabled.com.warrantchange.model.Warrant"),
 			true);
 	public static long CREATEDATE_COLUMN_BITMASK = 1L;
-	public static long STATUS_COLUMN_BITMASK = 2L;
+	public static long EXPIRATIONWARNINGSENT_COLUMN_BITMASK = 2L;
+	public static long STATUS_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -282,7 +283,19 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 	}
 
 	public void setExpirationWarningSent(boolean expirationWarningSent) {
+		_columnBitmask |= EXPIRATIONWARNINGSENT_COLUMN_BITMASK;
+
+		if (!_setOriginalExpirationWarningSent) {
+			_setOriginalExpirationWarningSent = true;
+
+			_originalExpirationWarningSent = _expirationWarningSent;
+		}
+
 		_expirationWarningSent = expirationWarningSent;
+	}
+
+	public boolean getOriginalExpirationWarningSent() {
+		return _originalExpirationWarningSent;
 	}
 
 	public long getColumnBitmask() {
@@ -385,6 +398,10 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 		warrantModelImpl._originalStatus = warrantModelImpl._status;
 
 		warrantModelImpl._originalCreateDate = warrantModelImpl._createDate;
+
+		warrantModelImpl._originalExpirationWarningSent = warrantModelImpl._expirationWarningSent;
+
+		warrantModelImpl._setOriginalExpirationWarningSent = false;
 
 		warrantModelImpl._columnBitmask = 0;
 	}
@@ -532,6 +549,8 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 	private Date _originalCreateDate;
 	private Date _modifiedDate;
 	private boolean _expirationWarningSent;
+	private boolean _originalExpirationWarningSent;
+	private boolean _setOriginalExpirationWarningSent;
 	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Warrant _escapedModelProxy;

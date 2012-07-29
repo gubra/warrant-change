@@ -278,6 +278,12 @@ public class WarrantLocalServiceUtil {
 		return getService().findWarrants(start, count);
 	}
 
+	public static void cleanUpWarrantsDeletedBefore(java.util.Date before)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.warrantchange.NoSuchWarrantException {
+		getService().cleanUpWarrantsDeletedBefore(before);
+	}
+
 	public static java.util.List<com.warrantchange.model.Warrant> findWarrants() {
 		return getService().findWarrants();
 	}

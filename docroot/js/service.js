@@ -1,1 +1,1 @@
-Liferay.Service.register("Liferay.Service.or", "com.warrantchange.service", "warrant-change-portlet");
+Liferay.Service.register("Liferay.Service.or", "com.warrantchange.service", "warrant-change");

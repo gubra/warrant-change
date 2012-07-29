@@ -92,12 +92,20 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 	public static final FinderPath FINDER_PATH_FETCH_BY_WARRANTBYAGE = new FinderPath(WarrantModelImpl.ENTITY_CACHE_ENABLED,
 			WarrantModelImpl.FINDER_CACHE_ENABLED, WarrantImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByWarrantByAge",
-			new String[] { Date.class.getName() },
-			WarrantModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {
+				Date.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			},
+			WarrantModelImpl.CREATEDATE_COLUMN_BITMASK |
+			WarrantModelImpl.STATUS_COLUMN_BITMASK |
+			WarrantModelImpl.EXPIRATIONWARNINGSENT_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_WARRANTBYAGE = new FinderPath(WarrantModelImpl.ENTITY_CACHE_ENABLED,
 			WarrantModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByWarrantByAge",
-			new String[] { Date.class.getName() });
+			new String[] {
+				Date.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			});
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(WarrantModelImpl.ENTITY_CACHE_ENABLED,
 			WarrantModelImpl.FINDER_CACHE_ENABLED, WarrantImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
@@ -121,7 +129,12 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 			new Object[] { warrant.getStatus() }, warrant);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_WARRANTBYAGE,
-			new Object[] { warrant.getCreateDate() }, warrant);
+			new Object[] {
+				warrant.getCreateDate(),
+				
+			warrant.getStatus(),
+				Boolean.valueOf(warrant.getExpirationWarningSent())
+			}, warrant);
 
 		warrant.resetOriginalValues();
 	}
@@ -200,7 +213,12 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 			new Object[] { warrant.getStatus() });
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_WARRANTBYAGE,
-			new Object[] { warrant.getCreateDate() });
+			new Object[] {
+				warrant.getCreateDate(),
+				
+			warrant.getStatus(),
+				Boolean.valueOf(warrant.getExpirationWarningSent())
+			});
 	}
 
 	/**
@@ -333,7 +351,12 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 				new Object[] { warrant.getStatus() }, warrant);
 
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_WARRANTBYAGE,
-				new Object[] { warrant.getCreateDate() }, warrant);
+				new Object[] {
+					warrant.getCreateDate(),
+					
+				warrant.getStatus(),
+					Boolean.valueOf(warrant.getExpirationWarningSent())
+				}, warrant);
 		}
 		else {
 			if ((warrantModelImpl.getColumnBitmask() &
@@ -352,7 +375,10 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 			if ((warrantModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_WARRANTBYAGE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						warrantModelImpl.getOriginalCreateDate()
+						warrantModelImpl.getOriginalCreateDate(),
+						
+						warrantModelImpl.getOriginalStatus(),
+						Boolean.valueOf(warrantModelImpl.getOriginalExpirationWarningSent())
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_WARRANTBYAGE,
@@ -361,7 +387,12 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 					args);
 
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_WARRANTBYAGE,
-					new Object[] { warrant.getCreateDate() }, warrant);
+					new Object[] {
+						warrant.getCreateDate(),
+						
+					warrant.getStatus(),
+						Boolean.valueOf(warrant.getExpirationWarningSent())
+					}, warrant);
 			}
 		}
 
@@ -632,24 +663,34 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 	}
 
 	/**
-	 * Returns the Warrant where createDate = &#63; or throws a {@link com.warrantchange.NoSuchWarrantException} if it could not be found.
+	 * Returns the Warrant where createDate = &#63; and status = &#63; and expirationWarningSent = &#63; or throws a {@link com.warrantchange.NoSuchWarrantException} if it could not be found.
 	 *
 	 * @param createDate the create date
+	 * @param status the status
+	 * @param expirationWarningSent the expiration warning sent
 	 * @return the matching Warrant
 	 * @throws com.warrantchange.NoSuchWarrantException if a matching Warrant could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Warrant findByWarrantByAge(Date createDate)
+	public Warrant findByWarrantByAge(Date createDate, String status,
+		boolean expirationWarningSent)
 		throws NoSuchWarrantException, SystemException {
-		Warrant warrant = fetchByWarrantByAge(createDate);
+		Warrant warrant = fetchByWarrantByAge(createDate, status,
+				expirationWarningSent);
 
 		if (warrant == null) {
-			StringBundler msg = new StringBundler(4);
+			StringBundler msg = new StringBundler(8);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("createDate=");
 			msg.append(createDate);
+
+			msg.append(", status=");
+			msg.append(status);
+
+			msg.append(", expirationWarningSent=");
+			msg.append(expirationWarningSent);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -664,28 +705,36 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 	}
 
 	/**
-	 * Returns the Warrant where createDate = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the Warrant where createDate = &#63; and status = &#63; and expirationWarningSent = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param createDate the create date
+	 * @param status the status
+	 * @param expirationWarningSent the expiration warning sent
 	 * @return the matching Warrant, or <code>null</code> if a matching Warrant could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Warrant fetchByWarrantByAge(Date createDate)
-		throws SystemException {
-		return fetchByWarrantByAge(createDate, true);
+	public Warrant fetchByWarrantByAge(Date createDate, String status,
+		boolean expirationWarningSent) throws SystemException {
+		return fetchByWarrantByAge(createDate, status, expirationWarningSent,
+			true);
 	}
 
 	/**
-	 * Returns the Warrant where createDate = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the Warrant where createDate = &#63; and status = &#63; and expirationWarningSent = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param createDate the create date
+	 * @param status the status
+	 * @param expirationWarningSent the expiration warning sent
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching Warrant, or <code>null</code> if a matching Warrant could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Warrant fetchByWarrantByAge(Date createDate,
-		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { createDate };
+	public Warrant fetchByWarrantByAge(Date createDate, String status,
+		boolean expirationWarningSent, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				createDate, status, expirationWarningSent
+			};
 
 		Object result = null;
 
@@ -695,7 +744,7 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler query = new StringBundler(5);
 
 			query.append(_SQL_SELECT_WARRANT_WHERE);
 
@@ -705,6 +754,20 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 			else {
 				query.append(_FINDER_COLUMN_WARRANTBYAGE_CREATEDATE_2);
 			}
+
+			if (status == null) {
+				query.append(_FINDER_COLUMN_WARRANTBYAGE_STATUS_1);
+			}
+			else {
+				if (status.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_WARRANTBYAGE_STATUS_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_WARRANTBYAGE_STATUS_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_WARRANTBYAGE_EXPIRATIONWARNINGSENT_2);
 
 			query.append(WarrantModelImpl.ORDER_BY_JPQL);
 
@@ -723,6 +786,12 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 					qPos.add(CalendarUtil.getTimestamp(createDate));
 				}
 
+				if (status != null) {
+					qPos.add(status);
+				}
+
+				qPos.add(expirationWarningSent);
+
 				List<Warrant> list = q.list();
 
 				result = list;
@@ -739,7 +808,10 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 					cacheResult(warrant);
 
 					if ((warrant.getCreateDate() == null) ||
-							!warrant.getCreateDate().equals(createDate)) {
+							!warrant.getCreateDate().equals(createDate) ||
+							(warrant.getStatus() == null) ||
+							!warrant.getStatus().equals(status) ||
+							(warrant.getExpirationWarningSent() != expirationWarningSent)) {
 						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_WARRANTBYAGE,
 							finderArgs, warrant);
 					}
@@ -897,14 +969,18 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 	}
 
 	/**
-	 * Removes the Warrant where createDate = &#63; from the database.
+	 * Removes the Warrant where createDate = &#63; and status = &#63; and expirationWarningSent = &#63; from the database.
 	 *
 	 * @param createDate the create date
+	 * @param status the status
+	 * @param expirationWarningSent the expiration warning sent
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByWarrantByAge(Date createDate)
+	public void removeByWarrantByAge(Date createDate, String status,
+		boolean expirationWarningSent)
 		throws NoSuchWarrantException, SystemException {
-		Warrant warrant = findByWarrantByAge(createDate);
+		Warrant warrant = findByWarrantByAge(createDate, status,
+				expirationWarningSent);
 
 		remove(warrant);
 	}
@@ -986,20 +1062,25 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 	}
 
 	/**
-	 * Returns the number of Warrants where createDate = &#63;.
+	 * Returns the number of Warrants where createDate = &#63; and status = &#63; and expirationWarningSent = &#63;.
 	 *
 	 * @param createDate the create date
+	 * @param status the status
+	 * @param expirationWarningSent the expiration warning sent
 	 * @return the number of matching Warrants
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByWarrantByAge(Date createDate) throws SystemException {
-		Object[] finderArgs = new Object[] { createDate };
+	public int countByWarrantByAge(Date createDate, String status,
+		boolean expirationWarningSent) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				createDate, status, expirationWarningSent
+			};
 
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_WARRANTBYAGE,
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_COUNT_WARRANT_WHERE);
 
@@ -1009,6 +1090,20 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 			else {
 				query.append(_FINDER_COLUMN_WARRANTBYAGE_CREATEDATE_2);
 			}
+
+			if (status == null) {
+				query.append(_FINDER_COLUMN_WARRANTBYAGE_STATUS_1);
+			}
+			else {
+				if (status.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_WARRANTBYAGE_STATUS_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_WARRANTBYAGE_STATUS_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_WARRANTBYAGE_EXPIRATIONWARNINGSENT_2);
 
 			String sql = query.toString();
 
@@ -1024,6 +1119,12 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 				if (createDate != null) {
 					qPos.add(CalendarUtil.getTimestamp(createDate));
 				}
+
+				if (status != null) {
+					qPos.add(status);
+				}
+
+				qPos.add(expirationWarningSent);
 
 				count = (Long)q.uniqueResult();
 			}
@@ -1124,11 +1225,16 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 	private static final String _SQL_SELECT_WARRANT_WHERE = "SELECT warrant FROM Warrant warrant WHERE ";
 	private static final String _SQL_COUNT_WARRANT = "SELECT COUNT(warrant) FROM Warrant warrant";
 	private static final String _SQL_COUNT_WARRANT_WHERE = "SELECT COUNT(warrant) FROM Warrant warrant WHERE ";
-	private static final String _FINDER_COLUMN_ALL_STATUS_1 = "warrant.status IS NULL AND warrant.status='CREATED'";
-	private static final String _FINDER_COLUMN_ALL_STATUS_2 = "warrant.status = ? AND warrant.status='CREATED'";
-	private static final String _FINDER_COLUMN_ALL_STATUS_3 = "(warrant.status IS NULL OR warrant.status = ?) AND warrant.status='CREATED'";
-	private static final String _FINDER_COLUMN_WARRANTBYAGE_CREATEDATE_1 = "warrant.createDate IS NULL AND warrant.status='CREATED'";
-	private static final String _FINDER_COLUMN_WARRANTBYAGE_CREATEDATE_2 = "warrant.createDate = ? AND warrant.status='CREATED'";
+	private static final String _FINDER_COLUMN_ALL_STATUS_1 = "warrant.status IS NULL";
+	private static final String _FINDER_COLUMN_ALL_STATUS_2 = "warrant.status = ?";
+	private static final String _FINDER_COLUMN_ALL_STATUS_3 = "(warrant.status IS NULL OR warrant.status = ?)";
+	private static final String _FINDER_COLUMN_WARRANTBYAGE_CREATEDATE_1 = "warrant.createDate IS NULL AND ";
+	private static final String _FINDER_COLUMN_WARRANTBYAGE_CREATEDATE_2 = "warrant.createDate = ? AND ";
+	private static final String _FINDER_COLUMN_WARRANTBYAGE_STATUS_1 = "warrant.status IS NULL AND ";
+	private static final String _FINDER_COLUMN_WARRANTBYAGE_STATUS_2 = "warrant.status = ? AND ";
+	private static final String _FINDER_COLUMN_WARRANTBYAGE_STATUS_3 = "(warrant.status IS NULL OR warrant.status = ?) AND ";
+	private static final String _FINDER_COLUMN_WARRANTBYAGE_EXPIRATIONWARNINGSENT_2 =
+		"warrant.expirationWarningSent = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "warrant.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Warrant exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Warrant exists with the key {";

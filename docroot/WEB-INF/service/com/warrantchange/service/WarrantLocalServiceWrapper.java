@@ -270,6 +270,12 @@ public class WarrantLocalServiceWrapper implements WarrantLocalService,
 		return _warrantLocalService.findWarrants(start, count);
 	}
 
+	public void cleanUpWarrantsDeletedBefore(java.util.Date before)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.warrantchange.NoSuchWarrantException {
+		_warrantLocalService.cleanUpWarrantsDeletedBefore(before);
+	}
+
 	public java.util.List<com.warrantchange.model.Warrant> findWarrants() {
 		return _warrantLocalService.findWarrants();
 	}

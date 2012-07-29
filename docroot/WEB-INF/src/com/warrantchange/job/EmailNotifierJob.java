@@ -2,7 +2,6 @@ package com.warrantchange.job;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -64,8 +63,8 @@ public class EmailNotifierJob implements MessageListener {
 	private void sendNotifications(NotificationType type) {
 		log.info(String.format("Checking %s warrants.", NotificationType.WARNING.equals(type) ? "expiring" : "expired"));
 		
-		Date dateFrom = NotificationType.WARNING.equals(type) ? createDate(NotificationType.EXPIRED.daysAgo) : null;
-		Date dateTo = createDate(type.daysAgo);
+		Date dateFrom = NotificationType.WARNING.equals(type) ? JobUtils.createDate(NotificationType.EXPIRED.daysAgo) : null;
+		Date dateTo = JobUtils.createDate(type.daysAgo);
 		
 		List<Warrant> warrants = null;
 		try {
@@ -104,16 +103,6 @@ public class EmailNotifierJob implements MessageListener {
 				log.info("Notification emails sent");
 			}
 		}
-	}
-
-	private Date createDate(int daysAgo) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
-		cal.add(Calendar.DAY_OF_YEAR, -daysAgo);
-		return cal.getTime();
 	}
 
 	private static void sendEmail(Warrant warrant, String to, String subject, String body) throws AddressException {

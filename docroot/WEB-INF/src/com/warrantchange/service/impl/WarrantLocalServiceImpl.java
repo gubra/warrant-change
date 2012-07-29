@@ -21,11 +21,14 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.warrantchange.NoSuchWarrantException;
 import com.warrantchange.model.Warrant;
+import com.warrantchange.model.WarrantModel;
 import com.warrantchange.model.impl.WarrantStateType;
 import com.warrantchange.service.WarrantLocalServiceUtil;
 import com.warrantchange.service.base.WarrantLocalServiceBaseImpl;
+import com.warrantchange.service.persistence.WarrantPersistence;
 import com.warrantchange.service.persistence.WarrantUtil;
 
 /**
@@ -79,7 +82,20 @@ public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
 	}
 	
 	public List<Warrant> findWarrants(int start, int count) throws SystemException {
-		return WarrantUtil.findAll(start, start + count);
+		DynamicQuery dynamicQuery = createDynamicQuery()
+				.add(RestrictionsFactoryUtil.eq("status", WarrantStateType.CREATED.name()));
+		dynamicQuery.setLimit(start, start + count);
+		return dynamicQuery(dynamicQuery);
+	}
+	
+	public void cleanUpWarrantsDeletedBefore(Date before) throws NoSuchWarrantException, SystemException {
+		DynamicQuery dynamicQuery = createDynamicQuery()
+				.add(RestrictionsFactoryUtil.eq("status", WarrantStateType.DELETED.name()))
+				.add(RestrictionsFactoryUtil.le("modifiedDate", before));
+		List<Warrant> warrants = dynamicQuery(dynamicQuery);
+		for (Warrant warrant : warrants) {
+			WarrantUtil.remove(warrant.getId()); 
+		}
 	}
 	
 	public void deleteWarrant(long id) throws NoSuchWarrantException, SystemException {
@@ -100,7 +116,7 @@ public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
 	}
 	
 	public List<Warrant> findWarrantsByCreateDate(Date from, Date to) throws SystemException {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(Warrant.class)
+		DynamicQuery dynamicQuery = createDynamicQuery()
 				.add(RestrictionsFactoryUtil.eq("status", WarrantStateType.CREATED.name()))
 				.add(RestrictionsFactoryUtil.eq("expirationWarningSent", false));
 		if (from != null) {
@@ -109,6 +125,10 @@ public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
 		if (to != null) {
 			dynamicQuery = dynamicQuery.add(RestrictionsFactoryUtil.le("createDate", to));
 		}
-		return WarrantUtil.findWithDynamicQuery(dynamicQuery);
+		return dynamicQuery(dynamicQuery);
+	}
+
+	private DynamicQuery createDynamicQuery() {
+		return DynamicQueryFactoryUtil.forClass(Warrant.class, PortalClassLoaderUtil.getClassLoader());
 	}
 }

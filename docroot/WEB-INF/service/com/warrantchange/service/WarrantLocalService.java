@@ -246,6 +246,10 @@ public interface WarrantLocalService extends PersistedModelLocalService {
 		int start, int count)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void cleanUpWarrantsDeletedBefore(java.util.Date before)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.warrantchange.NoSuchWarrantException;
+
 	public java.util.List<com.warrantchange.model.Warrant> findWarrants();
 
 	public java.util.List<com.warrantchange.model.Warrant> findWarrantsByCreateDate(

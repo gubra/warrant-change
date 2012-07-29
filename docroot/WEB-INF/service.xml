@@ -17,10 +17,10 @@
 		<column name="quantity" type="int" />
 
 		<column name="price" type="long" />
-        <column name="status" type="String"></column>
+        <column name="status" type="String"/>
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
-		<column name="expirationWarningSent" type="boolean"></column>
+		<column name="expirationWarningSent" type="boolean"/>
 
 		<!-- Other fields -->
 
@@ -31,11 +31,13 @@
 		</order>
 
 		<!-- Finder methods -->
-        <finder name="All" return-type="List" where="status='CREATED'">
+        <finder name="All" return-type="List">
             <finder-column name="status"></finder-column>
         </finder>
-        <finder name="WarrantByAge" return-type="List" where="status='CREATED'">
+        <finder name="WarrantByAge" return-type="List">
             <finder-column name="createDate"></finder-column>
+            <finder-column name="status"></finder-column>
+            <finder-column name="expirationWarningSent"></finder-column>
         </finder>
 	</entity>
 </service-builder>

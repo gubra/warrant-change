@@ -228,46 +228,59 @@ public class WarrantUtil {
 	}
 
 	/**
-	* Returns the Warrant where createDate = &#63; or throws a {@link com.warrantchange.NoSuchWarrantException} if it could not be found.
+	* Returns the Warrant where createDate = &#63; and status = &#63; and expirationWarningSent = &#63; or throws a {@link com.warrantchange.NoSuchWarrantException} if it could not be found.
 	*
 	* @param createDate the create date
+	* @param status the status
+	* @param expirationWarningSent the expiration warning sent
 	* @return the matching Warrant
 	* @throws com.warrantchange.NoSuchWarrantException if a matching Warrant could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.warrantchange.model.Warrant findByWarrantByAge(
-		java.util.Date createDate)
+		java.util.Date createDate, java.lang.String status,
+		boolean expirationWarningSent)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.warrantchange.NoSuchWarrantException {
-		return getPersistence().findByWarrantByAge(createDate);
+		return getPersistence()
+				   .findByWarrantByAge(createDate, status, expirationWarningSent);
 	}
 
 	/**
-	* Returns the Warrant where createDate = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the Warrant where createDate = &#63; and status = &#63; and expirationWarningSent = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param createDate the create date
+	* @param status the status
+	* @param expirationWarningSent the expiration warning sent
 	* @return the matching Warrant, or <code>null</code> if a matching Warrant could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.warrantchange.model.Warrant fetchByWarrantByAge(
-		java.util.Date createDate)
+		java.util.Date createDate, java.lang.String status,
+		boolean expirationWarningSent)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByWarrantByAge(createDate);
+		return getPersistence()
+				   .fetchByWarrantByAge(createDate, status,
+			expirationWarningSent);
 	}
 
 	/**
-	* Returns the Warrant where createDate = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the Warrant where createDate = &#63; and status = &#63; and expirationWarningSent = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param createDate the create date
+	* @param status the status
+	* @param expirationWarningSent the expiration warning sent
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching Warrant, or <code>null</code> if a matching Warrant could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.warrantchange.model.Warrant fetchByWarrantByAge(
-		java.util.Date createDate, boolean retrieveFromCache)
+		java.util.Date createDate, java.lang.String status,
+		boolean expirationWarningSent, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByWarrantByAge(createDate, retrieveFromCache);
+				   .fetchByWarrantByAge(createDate, status,
+			expirationWarningSent, retrieveFromCache);
 	}
 
 	/**
@@ -332,15 +345,19 @@ public class WarrantUtil {
 	}
 
 	/**
-	* Removes the Warrant where createDate = &#63; from the database.
+	* Removes the Warrant where createDate = &#63; and status = &#63; and expirationWarningSent = &#63; from the database.
 	*
 	* @param createDate the create date
+	* @param status the status
+	* @param expirationWarningSent the expiration warning sent
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByWarrantByAge(java.util.Date createDate)
+	public static void removeByWarrantByAge(java.util.Date createDate,
+		java.lang.String status, boolean expirationWarningSent)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.warrantchange.NoSuchWarrantException {
-		getPersistence().removeByWarrantByAge(createDate);
+		getPersistence()
+			.removeByWarrantByAge(createDate, status, expirationWarningSent);
 	}
 
 	/**
@@ -366,15 +383,20 @@ public class WarrantUtil {
 	}
 
 	/**
-	* Returns the number of Warrants where createDate = &#63;.
+	* Returns the number of Warrants where createDate = &#63; and status = &#63; and expirationWarningSent = &#63;.
 	*
 	* @param createDate the create date
+	* @param status the status
+	* @param expirationWarningSent the expiration warning sent
 	* @return the number of matching Warrants
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByWarrantByAge(java.util.Date createDate)
+	public static int countByWarrantByAge(java.util.Date createDate,
+		java.lang.String status, boolean expirationWarningSent)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByWarrantByAge(createDate);
+		return getPersistence()
+				   .countByWarrantByAge(createDate, status,
+			expirationWarningSent);
 	}
 
 	/**

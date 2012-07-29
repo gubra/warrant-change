@@ -95,10 +95,13 @@ public class WarrantLocalServiceClp implements WarrantLocalService {
 		_findWarrantsMethodKey19 = new MethodKey(_classLoaderProxy.getClassName(),
 				"findWarrants", int.class, int.class);
 
-		_findWarrantsMethodKey20 = new MethodKey(_classLoaderProxy.getClassName(),
+		_cleanUpWarrantsDeletedBeforeMethodKey20 = new MethodKey(_classLoaderProxy.getClassName(),
+				"cleanUpWarrantsDeletedBefore", java.util.Date.class);
+
+		_findWarrantsMethodKey21 = new MethodKey(_classLoaderProxy.getClassName(),
 				"findWarrants");
 
-		_findWarrantsByCreateDateMethodKey21 = new MethodKey(_classLoaderProxy.getClassName(),
+		_findWarrantsByCreateDateMethodKey22 = new MethodKey(_classLoaderProxy.getClassName(),
 				"findWarrantsByCreateDate", java.util.Date.class,
 				java.util.Date.class);
 	}
@@ -653,10 +656,38 @@ public class WarrantLocalServiceClp implements WarrantLocalService {
 		return (java.util.List<com.warrantchange.model.Warrant>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	public void cleanUpWarrantsDeletedBefore(java.util.Date before)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.warrantchange.NoSuchWarrantException {
+		MethodHandler methodHandler = new MethodHandler(_cleanUpWarrantsDeletedBeforeMethodKey20,
+				ClpSerializer.translateInput(before));
+
+		try {
+			_classLoaderProxy.invoke(methodHandler);
+		}
+		catch (Throwable t) {
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof com.warrantchange.NoSuchWarrantException) {
+				throw (com.warrantchange.NoSuchWarrantException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
 	public java.util.List<com.warrantchange.model.Warrant> findWarrants() {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_findWarrantsMethodKey20);
+		MethodHandler methodHandler = new MethodHandler(_findWarrantsMethodKey21);
 
 		try {
 			returnObj = _classLoaderProxy.invoke(methodHandler);
@@ -679,7 +710,7 @@ public class WarrantLocalServiceClp implements WarrantLocalService {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
-		MethodHandler methodHandler = new MethodHandler(_findWarrantsByCreateDateMethodKey21,
+		MethodHandler methodHandler = new MethodHandler(_findWarrantsByCreateDateMethodKey22,
 				ClpSerializer.translateInput(from),
 				ClpSerializer.translateInput(to));
 
@@ -728,6 +759,7 @@ public class WarrantLocalServiceClp implements WarrantLocalService {
 	private MethodKey _addWarrantMethodKey17;
 	private MethodKey _updateWarrantMethodKey18;
 	private MethodKey _findWarrantsMethodKey19;
-	private MethodKey _findWarrantsMethodKey20;
-	private MethodKey _findWarrantsByCreateDateMethodKey21;
+	private MethodKey _cleanUpWarrantsDeletedBeforeMethodKey20;
+	private MethodKey _findWarrantsMethodKey21;
+	private MethodKey _findWarrantsByCreateDateMethodKey22;
 }
