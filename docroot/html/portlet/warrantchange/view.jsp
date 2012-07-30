@@ -251,7 +251,7 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 				headerNames.add("price");
 				headerNames.add("sent");
 				headerNames.add("modified");
-				
+				headerNames.add("delete");
 		
 				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, headerNames, "no-entries-were-found");
 		
@@ -259,7 +259,9 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 		
 				searchContainer.setTotal(total);
 		
-				List<Warrant> results = WarrantLocalServiceUtil.findWarrants(searchContainer.getStart(), searchContainer.getEnd());
+				List<Warrant> results = 
+						/* WarrantLocalServiceUtil.findWarrantsByCreateDate(searchContainer.getStart(), searchContainer.getEnd()); */
+						WarrantLocalServiceUtil.findWarrants(searchContainer.getStart(), searchContainer.getEnd());
 		
 				searchContainer.setResults(results);
 		
@@ -276,7 +278,7 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 					
 					PortletURL deleteURL = renderResponse.createActionURL();
 					
-					deleteURL.setParameter("redirect", currentURL);
+					//deleteURL.setParameter("redirect", currentURL);
 					deleteURL.setParameter(Constants.CMD, Constants.DELETE);
 					deleteURL.setParameter("entryId", String.valueOf(entry.getId()));
 					
@@ -312,7 +314,12 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 					row.addText(dateFormatDate.format(entry.getCreateDate()), rowURL);
 					
 					// Action
-					//row.addText("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL);
+					//row.addButton("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL.toString());
+					if(entry.getUserId() == user.getUserId()){
+						row.addText("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL);
+						//row.addButton("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL.toString());
+					}
+					
 					//row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "entry_action.jspf");
 		
 					// Add result row
@@ -320,6 +327,7 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 				}
 				%>
 		
+
 				<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 
 		</aui:form>

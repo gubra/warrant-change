@@ -1,13 +1,15 @@
 package com.warrantchange.portlet;
 
 import java.io.IOException; 
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.portlet.ActionRequest; 
 import javax.portlet.ActionResponse; 
 import javax.portlet.PortletException; 
-import javax.portlet.PortletPreferences;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,13 +31,32 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 import com.warrantchange.model.Warrant;
+import com.warrantchange.model.impl.WarrantStateType;
 import com.warrantchange.service.WarrantLocalServiceUtil;
 
 public class WarrantChangePortlet extends MVCPortlet {
 
-	private static final Log _log = LogFactory.getLog(WarrantChangePortlet.class);
+	private static final Log _log = LogFactory.getLog(MVCPortlet.class);
 
 	public WarrantChangePortlet() {
+	}
+	
+	private void logParameters(ActionRequest actionRequest, 
+			ActionResponse actionResponse){
+		
+		_log.debug("logParameters() -> ");
+		
+		Map<String, String[]> parameterMap = actionRequest.getParameterMap();
+		Set<Entry<String,String[]>> entrySet = parameterMap.entrySet();
+		for(Entry<String, String[]> entry : entrySet){
+			_log.debug(",key :"+entry.getKey());
+			String[] values = entry.getValue();
+			for(String s : values){
+				_log.debug(s);
+				_log.debug(", ");
+			}
+		}
+		_log.debug("processAction() -> "+parameterMap);
 	}
 
 	@Override 
@@ -44,7 +65,7 @@ public class WarrantChangePortlet extends MVCPortlet {
 		
 		_log.debug("processAction() -> "+actionRequest);
 		
-		PortletPreferences prefs = actionRequest.getPreferences(); 
+		logParameters(actionRequest, actionResponse);
 		
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 		
@@ -116,7 +137,6 @@ public class WarrantChangePortlet extends MVCPortlet {
 
 			Warrant warrant = WarrantLocalServiceUtil.getWarrant(entryId);
 			
-//			warrant.setModifiedDate(modifiedDate);
 			warrant.setSummary(summary);
 			warrant.setQuantity(quantity);
 			warrant.setPrice(price);
@@ -130,7 +150,11 @@ public class WarrantChangePortlet extends MVCPortlet {
 	
 	protected void deleteEntry(ActionRequest actionRequest) throws Exception {
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
-		WarrantLocalServiceUtil.deleteWarrant(entryId);
+		System.out.println("WarrantLocalService, marking Warrant as deleted : "+entryId);
+		Warrant warrant = WarrantLocalServiceUtil.getWarrant(entryId);
+		warrant.setStatus(WarrantStateType.DELETED.name());
+		WarrantLocalServiceUtil.updateWarrant(warrant);
+//		WarrantLocalServiceUtil.deleteWarrant(entryId);
 	}
 	
 	

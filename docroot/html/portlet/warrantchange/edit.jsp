@@ -292,14 +292,18 @@ if(user != null){
 	<c:when test="<%= entry != null && (user.getUserId() != entry.getUserId()) %>">
 		<aui:fieldset>
 
-		<aui:input name="mailMessage">
-			<aui:validator name="required"/>
-		</aui:input>
-		</aui:fieldset>
-		<aui:button-row>
-		<aui:button type="submit" name="send" value="Send"/>
+			<aui:input name="mailMessage" type="textarea">
+				<aui:validator name="required"/>
+			</aui:input>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:fieldset>
+		
+		<aui:button-row>
+		
+			<aui:button type="submit" name="send" value="Send"/>
+	
+			<aui:button href="<%= redirect %>" type="cancel" />
+		
 		</aui:button-row>
 	</c:when>
 	<c:otherwise>
@@ -331,6 +335,7 @@ if(user != null){
 	</aui:fieldset>
 
 	<aui:button-row>
+	
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
@@ -354,7 +359,6 @@ if(user != null){
 	}
 	
 	function deleteEntry() {
-		document.<portlet:namespace />fm.action = '<portlet:actionURL><portlet:param name="struts_action" value="/warrantchange/edit_entry" /></portlet:actionURL>';
 		document.<portlet:namespace />fm.target = '';
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
 		submitForm(document.<portlet:namespace />fm);

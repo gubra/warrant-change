@@ -52,7 +52,7 @@ public class ClpSerializer {
 						new Class<?>[] { String.class });
 
 				String portletPropsServletContextName = (String)getMethod.invoke(null,
-						"warrant-change-deployment-context");
+						"warrant-change-portlet-deployment-context");
 
 				if (Validator.isNotNull(portletPropsServletContextName)) {
 					_servletContextName = portletPropsServletContextName;
@@ -68,7 +68,7 @@ public class ClpSerializer {
 			if (Validator.isNull(_servletContextName)) {
 				try {
 					String propsUtilServletContextName = PropsUtil.get(
-							"warrant-change-deployment-context");
+							"warrant-change-portlet-deployment-context");
 
 					if (Validator.isNotNull(propsUtilServletContextName)) {
 						_servletContextName = propsUtilServletContextName;
@@ -83,7 +83,7 @@ public class ClpSerializer {
 			}
 
 			if (Validator.isNull(_servletContextName)) {
-				_servletContextName = "warrant-change";
+				_servletContextName = "warrant-change-portlet";
 			}
 
 			return _servletContextName;
