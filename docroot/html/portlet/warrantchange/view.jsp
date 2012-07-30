@@ -318,6 +318,8 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 					if(entry.getUserId() == user.getUserId()){
 						row.addText("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL);
 						//row.addButton("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL.toString());
+					}else{
+						row.addText("right", SearchEntry.DEFAULT_VALIGN, "Delete");
 					}
 					
 					//row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "entry_action.jspf");

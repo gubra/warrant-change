@@ -124,69 +124,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 <%@page import="com.warrantchange.model.*" %>
 <%@
 page import="com.liferay.portal.util.PortletKeys" %>
-<%-- <%@
-page import="com.liferay.portal.model.*" %><%@
-page import="com.liferay.portal.model.impl.*" %><%@
-page import="com.liferay.portal.security.auth.AuthTokenUtil" %><%@
-page import="com.liferay.portal.security.auth.PrincipalException" %><%@
-page import="com.liferay.portal.security.permission.ActionKeys" %><%@
-page import="com.liferay.portal.security.permission.PermissionChecker" %><%@
-page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
-page import="com.liferay.portal.service.*" %><%@
-page import="com.liferay.portal.service.permission.GroupPermissionUtil" %><%@
-page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %><%@
-page import="com.liferay.portal.service.permission.LayoutPrototypePermissionUtil" %><%@
-page import="com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil" %><%@
-page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
-page import="com.liferay.portal.struts.StrutsUtil" %><%@
-page import="com.liferay.portal.theme.PortletDisplay" %><%@
-page import="com.liferay.portal.theme.ThemeDisplay" %><%@
-page import="com.liferay.portal.util.CookieKeys" %><%@
-page import="com.liferay.portal.util.JavaScriptBundleUtil" %><%@
-page import="com.liferay.portal.util.Portal" %><%@
-page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.util.PortletCategoryKeys" %><%@
-page import="com.liferay.portal.util.PortletKeys" %><%@
-page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
-page import="com.liferay.portal.util.PropsUtil" %><%@
-page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portal.util.SessionClicks" %><%@
-page import="com.liferay.portal.util.SessionTreeJSClicks" %><%@
-page import="com.liferay.portal.util.ShutdownUtil" %><%@
-page import="com.liferay.portal.util.WebAppPool" %><%@
-page import="com.liferay.portal.util.WebKeys" %><%@
-page import="com.liferay.portal.util.comparator.PortletCategoryComparator" %><%@
-page import="com.liferay.portal.util.comparator.PortletTitleComparator" %><%@
-page import="com.liferay.portal.webserver.WebServerServletTokenUtil" %><%@
-page import="com.liferay.portlet.InvokerPortlet" %><%@
-page import="com.liferay.portlet.PortalPreferences" %><%@
-page import="com.liferay.portlet.PortletConfigFactoryUtil" %><%@
-page import="com.liferay.portlet.PortletInstanceFactoryUtil" %><%@
-page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
-page import="com.liferay.portlet.PortletResponseImpl" %><%@
-page import="com.liferay.portlet.PortletSetupUtil" %><%@
-page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
-page import="com.liferay.portlet.PortletURLImpl" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.RenderParametersPool" %><%@
-page import="com.liferay.portlet.RenderRequestFactory" %><%@
-page import="com.liferay.portlet.RenderRequestImpl" %><%@
-page import="com.liferay.portlet.RenderResponseFactory" %><%@
-page import="com.liferay.portlet.RenderResponseImpl" %><%@
-page import="com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil" %><%@
-page import="com.liferay.util.ContentUtil" %><%@
-page import="com.liferay.util.CreditCard" %><%@
-page import="com.liferay.util.Encryptor" %><%@
-page import="com.liferay.util.JS" %><%@
-page import="com.liferay.util.PKParser" %><%@
-page import="com.liferay.util.PwdGenerator" %><%@
-page import="com.liferay.util.State" %><%@
-page import="com.liferay.util.StateUtil" %><%@
-page import="com.liferay.util.UniqueList" %><%@
-page import="com.liferay.util.log4j.Levels" %><%@
-page import="com.liferay.util.portlet.PortletRequestUtil" %><%@
-page import="com.liferay.util.servlet.DynamicServletRequest" %><%@
-page import="com.liferay.util.xml.XMLFormatter" %> --%>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -292,7 +229,7 @@ if(user != null){
 	<c:when test="<%= entry != null && (user.getUserId() != entry.getUserId()) %>">
 		<aui:fieldset>
 
-			<aui:input name="mailMessage" type="textarea">
+			<aui:input name="mailMessage" type="textarea" cssClass="textarea-container">
 				<aui:validator name="required"/>
 			</aui:input>
 

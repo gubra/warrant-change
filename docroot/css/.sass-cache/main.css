@@ -55,3 +55,9 @@
   right: 0;
   top: 0; }
 
+.textarea-container textarea {
+  height: 124px;
+  min-width: 512px;
+  max-width: 1024px;
+  width: 100%; }
+
