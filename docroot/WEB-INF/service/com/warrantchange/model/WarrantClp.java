@@ -100,11 +100,11 @@ public class WarrantClp extends BaseModelImpl<Warrant> implements Warrant {
 		_quantity = quantity;
 	}
 
-	public long getPrice() {
+	public double getPrice() {
 		return _price;
 	}
 
-	public void setPrice(long price) {
+	public void setPrice(double price) {
 		_price = price;
 	}
 
@@ -301,7 +301,7 @@ public class WarrantClp extends BaseModelImpl<Warrant> implements Warrant {
 	private String _userUuid;
 	private String _summary;
 	private int _quantity;
-	private long _price;
+	private double _price;
 	private String _status;
 	private Date _createDate;
 	private Date _modifiedDate;

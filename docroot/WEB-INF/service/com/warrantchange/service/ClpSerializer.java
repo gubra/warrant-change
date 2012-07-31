@@ -163,9 +163,9 @@ public class ClpSerializer {
 				method3.invoke(newModel, value3);
 
 				Method method4 = newModelClass.getMethod("setPrice",
-						new Class[] { Long.TYPE });
+						new Class[] { Double.TYPE });
 
-				Long value4 = new Long(oldCplModel.getPrice());
+				Double value4 = new Double(oldCplModel.getPrice());
 
 				method4.invoke(newModel, value4);
 
@@ -298,7 +298,7 @@ public class ClpSerializer {
 
 				Method method4 = oldModelClass.getMethod("getPrice");
 
-				Long value4 = (Long)method4.invoke(oldModel, (Object[])null);
+				Double value4 = (Double)method4.invoke(oldModel, (Object[])null);
 
 				newModel.setPrice(value4);
 

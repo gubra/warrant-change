@@ -16,7 +16,7 @@
 		<column name="summary" type="String" />
 		<column name="quantity" type="int" />
 
-		<column name="price" type="long" />
+		<column name="price" type="double" />
         <column name="status" type="String"/>
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />

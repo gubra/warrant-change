@@ -11,7 +11,7 @@
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="summary" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="price" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />

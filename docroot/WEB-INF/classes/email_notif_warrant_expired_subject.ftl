@@ -1,0 +1,1 @@
+Warrant expired: ${warrant.summary}

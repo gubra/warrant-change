@@ -6,7 +6,7 @@
 		<field name="userId" type="long" />
 		<field name="summary" type="String" />
 		<field name="quantity" type="int" />
-		<field name="price" type="long" />
+		<field name="price" type="double" />
 		<field name="status" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />

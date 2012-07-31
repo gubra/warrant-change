@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.warrantchange.service.WarrantLocalService" class="com.warrantchange.service.impl.WarrantLocalServiceImpl" />
+	<bean id="com.warrantchange.service.WarrantLocalServiceUtil" class="com.warrantchange.service.WarrantLocalServiceUtil">
+		<property name="service" ref="com.warrantchange.service.WarrantLocalService" />
+	</bean>
+	<bean id="com.warrantchange.service.WarrantService" class="com.warrantchange.service.impl.WarrantServiceImpl" />
+	<bean id="com.warrantchange.service.WarrantServiceUtil" class="com.warrantchange.service.WarrantServiceUtil">
+		<property name="service" ref="com.warrantchange.service.WarrantService" />
+	</bean>
+	<bean id="com.warrantchange.service.persistence.WarrantPersistence" class="com.warrantchange.service.persistence.WarrantPersistenceImpl" parent="basePersistence" />
+</beans>

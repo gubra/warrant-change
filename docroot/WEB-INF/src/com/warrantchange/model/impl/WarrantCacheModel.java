@@ -107,7 +107,7 @@ public class WarrantCacheModel implements CacheModel<Warrant>, Serializable {
 	public long userId;
 	public String summary;
 	public int quantity;
-	public long price;
+	public double price;
 	public String status;
 	public long createDate;
 	public long modifiedDate;

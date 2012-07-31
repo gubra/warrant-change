@@ -234,11 +234,11 @@ public interface WarrantLocalService extends PersistedModelLocalService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.warrantchange.model.Warrant addWarrant(long userId,
-		java.lang.String summary, int quantity, long price)
+		java.lang.String summary, int quantity, double price)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateWarrant(long id, java.lang.String summary, int quantity,
-		long price)
+		double price)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.warrantchange.NoSuchWarrantException;
 

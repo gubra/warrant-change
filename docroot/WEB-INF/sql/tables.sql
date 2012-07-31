@@ -3,7 +3,7 @@ create table warrant (
 	userId LONG,
 	summary VARCHAR(75) null,
 	quantity INTEGER,
-	price LONG,
+	price DOUBLE,
 	status VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,

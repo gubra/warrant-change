@@ -260,13 +260,13 @@ public class WarrantLocalServiceUtil {
 	}
 
 	public static com.warrantchange.model.Warrant addWarrant(long userId,
-		java.lang.String summary, int quantity, long price)
+		java.lang.String summary, int quantity, double price)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().addWarrant(userId, summary, quantity, price);
 	}
 
 	public static void updateWarrant(long id, java.lang.String summary,
-		int quantity, long price)
+		int quantity, double price)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.warrantchange.NoSuchWarrantException {
 		getService().updateWarrant(id, summary, quantity, price);

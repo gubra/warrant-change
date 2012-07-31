@@ -86,11 +86,11 @@ public class WarrantLocalServiceClp implements WarrantLocalService {
 
 		_addWarrantMethodKey17 = new MethodKey(_classLoaderProxy.getClassName(),
 				"addWarrant", long.class, java.lang.String.class, int.class,
-				long.class);
+				double.class);
 
 		_updateWarrantMethodKey18 = new MethodKey(_classLoaderProxy.getClassName(),
 				"updateWarrant", long.class, java.lang.String.class, int.class,
-				long.class);
+				double.class);
 
 		_findWarrantsMethodKey19 = new MethodKey(_classLoaderProxy.getClassName(),
 				"findWarrants", int.class, int.class);
@@ -572,7 +572,7 @@ public class WarrantLocalServiceClp implements WarrantLocalService {
 	}
 
 	public com.warrantchange.model.Warrant addWarrant(long userId,
-		java.lang.String summary, int quantity, long price)
+		java.lang.String summary, int quantity, double price)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -600,7 +600,7 @@ public class WarrantLocalServiceClp implements WarrantLocalService {
 	}
 
 	public void updateWarrant(long id, java.lang.String summary, int quantity,
-		long price)
+		double price)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.warrantchange.NoSuchWarrantException {
 		MethodHandler methodHandler = new MethodHandler(_updateWarrantMethodKey18,

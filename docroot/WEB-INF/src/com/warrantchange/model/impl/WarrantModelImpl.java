@@ -69,13 +69,13 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 			{ "userId", Types.BIGINT },
 			{ "summary", Types.VARCHAR },
 			{ "quantity", Types.INTEGER },
-			{ "price", Types.BIGINT },
+			{ "price", Types.DOUBLE },
 			{ "status", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "expirationWarningSent", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table warrant (id_ LONG not null primary key,userId LONG,summary VARCHAR(75) null,quantity INTEGER,price LONG,status VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,expirationWarningSent BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table warrant (id_ LONG not null primary key,userId LONG,summary VARCHAR(75) null,quantity INTEGER,price DOUBLE,status VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,expirationWarningSent BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table warrant";
 	public static final String ORDER_BY_JPQL = " ORDER BY warrant.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY warrant.createDate DESC";
@@ -213,11 +213,11 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 	}
 
 	@JSON
-	public long getPrice() {
+	public double getPrice() {
 		return _price;
 	}
 
-	public void setPrice(long price) {
+	public void setPrice(double price) {
 		_price = price;
 	}
 
@@ -542,7 +542,7 @@ public class WarrantModelImpl extends BaseModelImpl<Warrant>
 	private String _userUuid;
 	private String _summary;
 	private int _quantity;
-	private long _price;
+	private double _price;
 	private String _status;
 	private String _originalStatus;
 	private Date _createDate;

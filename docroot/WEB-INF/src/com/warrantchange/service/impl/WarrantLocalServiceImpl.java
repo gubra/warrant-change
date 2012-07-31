@@ -53,7 +53,7 @@ public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
 	 * Never reference this interface directly. Always use {@link com.warrantchange.service.WarrantLocalServiceUtil} to access the Warrant local service.
 	 */
 	
-	public Warrant addWarrant(long userId, String summary, int quantity, long price) throws SystemException {
+	public Warrant addWarrant(long userId, String summary, int quantity, double price) throws SystemException {
 		long id = counterLocalService.increment();
 		Warrant warrant = WarrantLocalServiceUtil.createWarrant(id);
 		Date now = new Date();
@@ -67,7 +67,7 @@ public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
 		return WarrantUtil.update(warrant, true);
 	}
 	
-	public void updateWarrant(long id, String summary, int quantity, long price) throws NoSuchWarrantException, SystemException {
+	public void updateWarrant(long id, String summary, int quantity, double price) throws NoSuchWarrantException, SystemException {
 		Warrant warrant = WarrantUtil.findByPrimaryKey(id);
 		warrant.setSummary(summary);
 		warrant.setQuantity(quantity);

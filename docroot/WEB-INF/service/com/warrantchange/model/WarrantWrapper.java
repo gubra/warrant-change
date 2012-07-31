@@ -153,7 +153,7 @@ public class WarrantWrapper implements Warrant, ModelWrapper<Warrant> {
 	*
 	* @return the price of this Warrant
 	*/
-	public long getPrice() {
+	public double getPrice() {
 		return _warrant.getPrice();
 	}
 
@@ -162,7 +162,7 @@ public class WarrantWrapper implements Warrant, ModelWrapper<Warrant> {
 	*
 	* @param price the price of this Warrant
 	*/
-	public void setPrice(long price) {
+	public void setPrice(double price) {
 		_warrant.setPrice(price);
 	}
 

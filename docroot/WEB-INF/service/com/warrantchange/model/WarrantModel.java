@@ -137,14 +137,14 @@ public interface WarrantModel extends BaseModel<Warrant> {
 	 *
 	 * @return the price of this Warrant
 	 */
-	public long getPrice();
+	public double getPrice();
 
 	/**
 	 * Sets the price of this Warrant.
 	 *
 	 * @param price the price of this Warrant
 	 */
-	public void setPrice(long price);
+	public void setPrice(double price);
 
 	/**
 	 * Returns the status of this Warrant.

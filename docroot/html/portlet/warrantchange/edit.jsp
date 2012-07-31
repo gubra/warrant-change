@@ -207,7 +207,7 @@ if(user != null){
 }
 
 NumberFormat doubleFormat = NumberFormat.getNumberInstance(locale);
-
+doubleFormat.setGroupingUsed(false);
 doubleFormat.setMaximumFractionDigits(2);
 doubleFormat.setMinimumFractionDigits(2);
 
@@ -266,7 +266,7 @@ doubleFormat.setMinimumFractionDigits(2);
 			</aui:validator>
 		</aui:input>
 
-		<aui:input field="price" name="price" helpMessage="햞 (EUR/db)" label="햞 (EUR/db)" format="<%= doubleFormat %>" value="<%= String.valueOf(entry.getPrice()/100) %>">
+		<aui:input field="price" name="price" helpMessage="햞 (EUR/db)" label="햞 (EUR/db)">
 			<aui:validator name="required"/>
 		</aui:input>
 		

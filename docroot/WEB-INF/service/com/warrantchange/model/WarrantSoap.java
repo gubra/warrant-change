@@ -124,11 +124,11 @@ public class WarrantSoap implements Serializable {
 		_quantity = quantity;
 	}
 
-	public long getPrice() {
+	public double getPrice() {
 		return _price;
 	}
 
-	public void setPrice(long price) {
+	public void setPrice(double price) {
 		_price = price;
 	}
 
@@ -172,7 +172,7 @@ public class WarrantSoap implements Serializable {
 	private long _userId;
 	private String _summary;
 	private int _quantity;
-	private long _price;
+	private double _price;
 	private String _status;
 	private Date _createDate;
 	private Date _modifiedDate;

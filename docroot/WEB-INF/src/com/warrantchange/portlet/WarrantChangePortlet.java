@@ -108,8 +108,9 @@ public class WarrantChangePortlet extends MVCPortlet {
 
 		String summary = ParamUtil.getString(actionRequest, "summary");
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
-		long price = ParamUtil.getLong(actionRequest, "price");
+		double price = ParamUtil.getDouble(actionRequest, "price");
 		
+		System.out.println("price: "+price);
 		
 		if(summary == null || summary.length()<=0){
 			//SessionErrors.add(actionRequest,"summary-required");
@@ -117,14 +118,17 @@ public class WarrantChangePortlet extends MVCPortlet {
 		
 		if(quantity <= 0){
 			SessionErrors.add(actionRequest, "quantity-required");
+			return;
 		}
 		
 		if((quantity % 10) != 0){
 			SessionErrors.add(actionRequest,"must-be-remainder-of-ten");
+			return;
 		}
 		
-		if(price <= 0){
+		if(price < 0){
 			SessionErrors.add(actionRequest, "price-required");
+			return;
 		}
 
 		if (entryId <= 0) {
@@ -169,6 +173,7 @@ public class WarrantChangePortlet extends MVCPortlet {
 		
 		if(mailMessage == null || mailMessage.length()<=0){
 			SessionErrors.add(actionRequest,"mailMessage-required");
+			return;
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
