@@ -246,9 +246,9 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 		
 				headerNames.add("userId");
 				headerNames.add("country");
-				headerNames.add("summary");
+				/* headerNames.add("summary"); */
 				headerNames.add("quantity");
-				headerNames.add("price");
+				headerNames.add("Darab ár (EUR)");
 				headerNames.add("sent");
 				headerNames.add("modified");
 				headerNames.add("delete");
@@ -298,13 +298,13 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 					row.addText(u.getLocale().getDisplayCountry(), rowURL);
 					
 					// Summ
-					row.addText(entry.getSummary(), rowURL);
+					/* row.addText(entry.getSummary(), rowURL); */
 		
 					// Qty
 					row.addText(String.valueOf(entry.getQuantity()), rowURL);
 		
 					//Price
-					row.addText(NumberFormat.getCurrencyInstance(u.getLocale()).format(entry.getPrice()), rowURL);
+					row.addText(NumberFormat.getCurrencyInstance(Locale.FRANCE).format(entry.getPrice()), rowURL);
 					
 					// Modified date
 					row.addText(dateFormatDate.format(entry.getModifiedDate()), rowURL);
@@ -319,7 +319,7 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 						row.addText("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL);
 						//row.addButton("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL.toString());
 					}else{
-						row.addText("right", SearchEntry.DEFAULT_VALIGN, "Delete");
+						row.addText("right", SearchEntry.DEFAULT_VALIGN, " ");
 					}
 					
 					//row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "entry_action.jspf");

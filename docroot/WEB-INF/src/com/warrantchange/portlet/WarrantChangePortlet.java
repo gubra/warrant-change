@@ -112,7 +112,7 @@ public class WarrantChangePortlet extends MVCPortlet {
 		
 		
 		if(summary == null || summary.length()<=0){
-			SessionErrors.add(actionRequest,"summary-required");
+			//SessionErrors.add(actionRequest,"summary-required");
 		}
 		
 		if(quantity <= 0){
@@ -188,7 +188,7 @@ public class WarrantChangePortlet extends MVCPortlet {
 			sellingUser = UserLocalServiceUtil.getUser(warrant.getUserId());
 
 			MailMessage mailMessageS = new MailMessage();
-			mailMessageS.setBody(mailMessage+" warrant: "+warrant);
+			mailMessageS.setBody(mailMessage);
 			mailMessageS.setFrom(new InternetAddress(currentUser.getEmailAddress()));
 			mailMessageS.setSubject("Warrant interest");
 			mailMessageS.setTo(new InternetAddress(sellingUser.getEmailAddress()));

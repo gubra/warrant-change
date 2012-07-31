@@ -206,6 +206,11 @@ if(user != null){
 	locale = user.getLocale();
 }
 
+NumberFormat doubleFormat = NumberFormat.getNumberInstance(locale);
+
+doubleFormat.setMaximumFractionDigits(2);
+doubleFormat.setMinimumFractionDigits(2);
+
 %>
 
 <c:choose>
@@ -249,12 +254,8 @@ if(user != null){
 
 	<aui:fieldset>
 
-		<aui:input name="summary">
-			<aui:validator name="required"/>
-		</aui:input>
-
-		<aui:input name="quantity">
-			<aui:validator name="custom" errorMessage="quantity-must-be-number-div-by-ten">
+		<aui:input name="quantity" helpMessage="Mennyiség (csak 10 többszöröse lehet)" label="Mennyiség (csak 10 többszöröse lehet)">
+			<aui:validator name="custom" errorMessage="Csak 10 többszöröse lehet!">
 				function(val, fieldNode, ruleValue) { 
 					var inp = Number(val);
 					if(inp == NaN || ((inp % 10) != 0)){
@@ -265,9 +266,10 @@ if(user != null){
 			</aui:validator>
 		</aui:input>
 
-		<aui:input name="price">
+		<aui:input field="price" name="price" helpMessage="Ár (EUR/db)" label="Ár (EUR/db)" format="<%= doubleFormat %>" value="<%= String.valueOf(entry.getPrice()/100) %>">
 			<aui:validator name="required"/>
 		</aui:input>
+		
 		
 	</aui:fieldset>
 

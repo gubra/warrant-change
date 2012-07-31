@@ -129,6 +129,6 @@ public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
 	}
 
 	private DynamicQuery createDynamicQuery() {
-		return DynamicQueryFactoryUtil.forClass(Warrant.class, PortalClassLoaderUtil.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(Warrant.class);
 	}
 }
