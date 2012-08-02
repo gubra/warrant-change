@@ -33,7 +33,10 @@ import com.warrantchange.model.Warrant;
 
 import com.warrantchange.service.WarrantLocalService;
 import com.warrantchange.service.WarrantService;
+import com.warrantchange.service.WarrantUserUniqueIdLocalService;
+import com.warrantchange.service.WarrantUserUniqueIdService;
 import com.warrantchange.service.persistence.WarrantPersistence;
+import com.warrantchange.service.persistence.WarrantUserUniqueIdPersistence;
 
 import javax.sql.DataSource;
 
@@ -109,6 +112,63 @@ public abstract class WarrantServiceBaseImpl extends PrincipalBean
 	 */
 	public void setWarrantPersistence(WarrantPersistence warrantPersistence) {
 		this.warrantPersistence = warrantPersistence;
+	}
+
+	/**
+	 * Returns the WarrantUserUniqueId local service.
+	 *
+	 * @return the WarrantUserUniqueId local service
+	 */
+	public WarrantUserUniqueIdLocalService getWarrantUserUniqueIdLocalService() {
+		return warrantUserUniqueIdLocalService;
+	}
+
+	/**
+	 * Sets the WarrantUserUniqueId local service.
+	 *
+	 * @param warrantUserUniqueIdLocalService the WarrantUserUniqueId local service
+	 */
+	public void setWarrantUserUniqueIdLocalService(
+		WarrantUserUniqueIdLocalService warrantUserUniqueIdLocalService) {
+		this.warrantUserUniqueIdLocalService = warrantUserUniqueIdLocalService;
+	}
+
+	/**
+	 * Returns the WarrantUserUniqueId remote service.
+	 *
+	 * @return the WarrantUserUniqueId remote service
+	 */
+	public WarrantUserUniqueIdService getWarrantUserUniqueIdService() {
+		return warrantUserUniqueIdService;
+	}
+
+	/**
+	 * Sets the WarrantUserUniqueId remote service.
+	 *
+	 * @param warrantUserUniqueIdService the WarrantUserUniqueId remote service
+	 */
+	public void setWarrantUserUniqueIdService(
+		WarrantUserUniqueIdService warrantUserUniqueIdService) {
+		this.warrantUserUniqueIdService = warrantUserUniqueIdService;
+	}
+
+	/**
+	 * Returns the WarrantUserUniqueId persistence.
+	 *
+	 * @return the WarrantUserUniqueId persistence
+	 */
+	public WarrantUserUniqueIdPersistence getWarrantUserUniqueIdPersistence() {
+		return warrantUserUniqueIdPersistence;
+	}
+
+	/**
+	 * Sets the WarrantUserUniqueId persistence.
+	 *
+	 * @param warrantUserUniqueIdPersistence the WarrantUserUniqueId persistence
+	 */
+	public void setWarrantUserUniqueIdPersistence(
+		WarrantUserUniqueIdPersistence warrantUserUniqueIdPersistence) {
+		this.warrantUserUniqueIdPersistence = warrantUserUniqueIdPersistence;
 	}
 
 	/**
@@ -295,6 +355,12 @@ public abstract class WarrantServiceBaseImpl extends PrincipalBean
 	protected WarrantService warrantService;
 	@BeanReference(type = WarrantPersistence.class)
 	protected WarrantPersistence warrantPersistence;
+	@BeanReference(type = WarrantUserUniqueIdLocalService.class)
+	protected WarrantUserUniqueIdLocalService warrantUserUniqueIdLocalService;
+	@BeanReference(type = WarrantUserUniqueIdService.class)
+	protected WarrantUserUniqueIdService warrantUserUniqueIdService;
+	@BeanReference(type = WarrantUserUniqueIdPersistence.class)
+	protected WarrantUserUniqueIdPersistence warrantUserUniqueIdPersistence;
 	@BeanReference(type = CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = ResourceLocalService.class)

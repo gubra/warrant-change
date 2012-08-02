@@ -9,3 +9,11 @@ create table warrant (
 	modifiedDate DATE null,
 	expirationWarningSent BOOLEAN
 );
+
+create table warrantUserUniqueId (
+	id_ LONG not null primary key,
+	uniqueId VARCHAR(75) null,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null
+);

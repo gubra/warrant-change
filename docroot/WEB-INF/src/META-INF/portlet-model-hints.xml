@@ -12,4 +12,11 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="expirationWarningSent" type="boolean" />
 	</model>
+	<model name="com.warrantchange.model.WarrantUserUniqueId">
+		<field name="id" type="long" />
+		<field name="uniqueId" type="String" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 </model-hints>

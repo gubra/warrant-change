@@ -106,6 +106,15 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 				Date.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			});
+	public static final FinderPath FINDER_PATH_FETCH_BY_USERID = new FinderPath(WarrantModelImpl.ENTITY_CACHE_ENABLED,
+			WarrantModelImpl.FINDER_CACHE_ENABLED, WarrantImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
+			new String[] { Long.class.getName() },
+			WarrantModelImpl.USERID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(WarrantModelImpl.ENTITY_CACHE_ENABLED,
+			WarrantModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(WarrantModelImpl.ENTITY_CACHE_ENABLED,
 			WarrantModelImpl.FINDER_CACHE_ENABLED, WarrantImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
@@ -135,6 +144,9 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 			warrant.getStatus(),
 				Boolean.valueOf(warrant.getExpirationWarningSent())
 			}, warrant);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID,
+			new Object[] { Long.valueOf(warrant.getUserId()) }, warrant);
 
 		warrant.resetOriginalValues();
 	}
@@ -219,6 +231,9 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 			warrant.getStatus(),
 				Boolean.valueOf(warrant.getExpirationWarningSent())
 			});
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID,
+			new Object[] { Long.valueOf(warrant.getUserId()) });
 	}
 
 	/**
@@ -357,6 +372,9 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 				warrant.getStatus(),
 					Boolean.valueOf(warrant.getExpirationWarningSent())
 				}, warrant);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID,
+				new Object[] { Long.valueOf(warrant.getUserId()) }, warrant);
 		}
 		else {
 			if ((warrantModelImpl.getColumnBitmask() &
@@ -393,6 +411,19 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 					warrant.getStatus(),
 						Boolean.valueOf(warrant.getExpirationWarningSent())
 					}, warrant);
+			}
+
+			if ((warrantModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_USERID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(warrantModelImpl.getOriginalUserId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID, args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID,
+					new Object[] { Long.valueOf(warrant.getUserId()) }, warrant);
 			}
 		}
 
@@ -842,6 +873,135 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 	}
 
 	/**
+	 * Returns the Warrant where userId = &#63; or throws a {@link com.warrantchange.NoSuchWarrantException} if it could not be found.
+	 *
+	 * @param userId the user ID
+	 * @return the matching Warrant
+	 * @throws com.warrantchange.NoSuchWarrantException if a matching Warrant could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Warrant findByUserId(long userId)
+		throws NoSuchWarrantException, SystemException {
+		Warrant warrant = fetchByUserId(userId);
+
+		if (warrant == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("userId=");
+			msg.append(userId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchWarrantException(msg.toString());
+		}
+
+		return warrant;
+	}
+
+	/**
+	 * Returns the Warrant where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @return the matching Warrant, or <code>null</code> if a matching Warrant could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Warrant fetchByUserId(long userId) throws SystemException {
+		return fetchByUserId(userId, true);
+	}
+
+	/**
+	 * Returns the Warrant where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching Warrant, or <code>null</code> if a matching Warrant could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Warrant fetchByUserId(long userId, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { userId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_USERID,
+					finderArgs, this);
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_WARRANT_WHERE);
+
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
+
+			query.append(WarrantModelImpl.ORDER_BY_JPQL);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				List<Warrant> list = q.list();
+
+				result = list;
+
+				Warrant warrant = null;
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID,
+						finderArgs, list);
+				}
+				else {
+					warrant = list.get(0);
+
+					cacheResult(warrant);
+
+					if ((warrant.getUserId() != userId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID,
+							finderArgs, warrant);
+					}
+				}
+
+				return warrant;
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (result == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID,
+						finderArgs);
+				}
+
+				closeSession(session);
+			}
+		}
+		else {
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (Warrant)result;
+			}
+		}
+	}
+
+	/**
 	 * Returns all the Warrants.
 	 *
 	 * @return the Warrants
@@ -981,6 +1141,19 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 		throws NoSuchWarrantException, SystemException {
 		Warrant warrant = findByWarrantByAge(createDate, status,
 				expirationWarningSent);
+
+		remove(warrant);
+	}
+
+	/**
+	 * Removes the Warrant where userId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByUserId(long userId)
+		throws NoSuchWarrantException, SystemException {
+		Warrant warrant = findByUserId(userId);
 
 		remove(warrant);
 	}
@@ -1147,6 +1320,59 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 	}
 
 	/**
+	 * Returns the number of Warrants where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the number of matching Warrants
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByUserId(long userId) throws SystemException {
+		Object[] finderArgs = new Object[] { userId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_USERID,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_WARRANT_WHERE);
+
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(userId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERID,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
 	 * Returns the number of Warrants.
 	 *
 	 * @return the number of Warrants
@@ -1217,6 +1443,8 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 
 	@BeanReference(type = WarrantPersistence.class)
 	protected WarrantPersistence warrantPersistence;
+	@BeanReference(type = WarrantUserUniqueIdPersistence.class)
+	protected WarrantUserUniqueIdPersistence warrantUserUniqueIdPersistence;
 	@BeanReference(type = ResourcePersistence.class)
 	protected ResourcePersistence resourcePersistence;
 	@BeanReference(type = UserPersistence.class)
@@ -1235,6 +1463,7 @@ public class WarrantPersistenceImpl extends BasePersistenceImpl<Warrant>
 	private static final String _FINDER_COLUMN_WARRANTBYAGE_STATUS_3 = "(warrant.status IS NULL OR warrant.status = ?) AND ";
 	private static final String _FINDER_COLUMN_WARRANTBYAGE_EXPIRATIONWARNINGSENT_2 =
 		"warrant.expirationWarningSent = ?";
+	private static final String _FINDER_COLUMN_USERID_USERID_2 = "warrant.userId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "warrant.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Warrant exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Warrant exists with the key {";

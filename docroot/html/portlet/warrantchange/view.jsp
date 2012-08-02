@@ -1,4 +1,5 @@
 
+<%@page import="com.warrantchange.portlet.WarrantChangePortlet"%>
 <%@page import="com.liferay.util.NumberFormatUtil"%>
 <%@page import="com.liferay.portal.service.UserLocalServiceUtil"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -220,6 +221,8 @@ themeDisplay.setIncludeServiceJs(true);
 
 currentURLObj.setParameter("struts_action", "/warrantchange/view");
 
+boolean userHasWarrant = WarrantLocalServiceUtil.userHasWarrant(user.getUserId());
+
 %>
 
 <c:choose>
@@ -235,7 +238,7 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 		
 		<aui:form action="<%= currentURLObj.toString() %>" method="post" name="fm">
 
-			<aui:button onClick='<%= renderResponse.getNamespace() + "addEntry()" %>' value="add-entry" />
+			<aui:button disabled="<%= userHasWarrant %>" onClick='<%= renderResponse.getNamespace() + "addEntry()" %>' value="add-entry" />
 		
 				<div class="separator"><!-- --></div>
 		
@@ -260,7 +263,6 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 				searchContainer.setTotal(total);
 		
 				List<Warrant> results = 
-						/* WarrantLocalServiceUtil.findWarrantsByCreateDate(searchContainer.getStart(), searchContainer.getEnd()); */
 						WarrantLocalServiceUtil.findWarrants(searchContainer.getStart(), searchContainer.getEnd());
 		
 				searchContainer.setResults(results);

@@ -178,6 +178,40 @@ public interface WarrantPersistence extends BasePersistence<Warrant> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the Warrant where userId = &#63; or throws a {@link com.warrantchange.NoSuchWarrantException} if it could not be found.
+	*
+	* @param userId the user ID
+	* @return the matching Warrant
+	* @throws com.warrantchange.NoSuchWarrantException if a matching Warrant could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.warrantchange.model.Warrant findByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.warrantchange.NoSuchWarrantException;
+
+	/**
+	* Returns the Warrant where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param userId the user ID
+	* @return the matching Warrant, or <code>null</code> if a matching Warrant could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.warrantchange.model.Warrant fetchByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the Warrant where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param userId the user ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching Warrant, or <code>null</code> if a matching Warrant could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.warrantchange.model.Warrant fetchByUserId(long userId,
+		boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the Warrants.
 	*
 	* @return the Warrants
@@ -243,6 +277,16 @@ public interface WarrantPersistence extends BasePersistence<Warrant> {
 			com.warrantchange.NoSuchWarrantException;
 
 	/**
+	* Removes the Warrant where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByUserId(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.warrantchange.NoSuchWarrantException;
+
+	/**
 	* Removes all the Warrants from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -271,6 +315,16 @@ public interface WarrantPersistence extends BasePersistence<Warrant> {
 	*/
 	public int countByWarrantByAge(java.util.Date createDate,
 		java.lang.String status, boolean expirationWarningSent)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of Warrants where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching Warrants
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -10,4 +10,13 @@
 		<property name="service" ref="com.warrantchange.service.WarrantService" />
 	</bean>
 	<bean id="com.warrantchange.service.persistence.WarrantPersistence" class="com.warrantchange.service.persistence.WarrantPersistenceImpl" parent="basePersistence" />
+	<bean id="com.warrantchange.service.WarrantUserUniqueIdLocalService" class="com.warrantchange.service.impl.WarrantUserUniqueIdLocalServiceImpl" />
+	<bean id="com.warrantchange.service.WarrantUserUniqueIdLocalServiceUtil" class="com.warrantchange.service.WarrantUserUniqueIdLocalServiceUtil">
+		<property name="service" ref="com.warrantchange.service.WarrantUserUniqueIdLocalService" />
+	</bean>
+	<bean id="com.warrantchange.service.WarrantUserUniqueIdService" class="com.warrantchange.service.impl.WarrantUserUniqueIdServiceImpl" />
+	<bean id="com.warrantchange.service.WarrantUserUniqueIdServiceUtil" class="com.warrantchange.service.WarrantUserUniqueIdServiceUtil">
+		<property name="service" ref="com.warrantchange.service.WarrantUserUniqueIdService" />
+	</bean>
+	<bean id="com.warrantchange.service.persistence.WarrantUserUniqueIdPersistence" class="com.warrantchange.service.persistence.WarrantUserUniqueIdPersistenceImpl" parent="basePersistence" />
 </beans>

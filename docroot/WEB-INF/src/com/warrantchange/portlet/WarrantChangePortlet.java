@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -14,6 +15,7 @@ import javax.portlet.PortletException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
@@ -30,15 +32,33 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
+import com.warrantchange.job.MailMessageLogger;
 import com.warrantchange.model.Warrant;
+import com.warrantchange.model.WarrantUserUniqueId;
 import com.warrantchange.model.impl.WarrantStateType;
 import com.warrantchange.service.WarrantLocalServiceUtil;
+import com.warrantchange.service.WarrantUserUniqueIdLocalServiceUtil;
 
 public class WarrantChangePortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactory.getLog(MVCPortlet.class);
 
 	public WarrantChangePortlet() {
+	}
+	
+	@Override
+	public void init() throws PortletException {
+		super.init();
+		MessageBusUtil.registerMessageListener(
+				DestinationNames.MAIL, new MailMessageLogger());
+		
+//		try {
+//			WarrantUserUniqueId createWarrantUserUniqueId = WarrantUserUniqueIdLocalServiceUtil.createWarrantUserUniqueId(CounterLocalServiceUtil.increment());
+//			createWarrantUserUniqueId.setUniqueId(UUID.randomUUID().toString());
+//		} catch (SystemException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	private void logParameters(ActionRequest actionRequest, 
@@ -134,8 +154,14 @@ public class WarrantChangePortlet extends MVCPortlet {
 		if (entryId <= 0) {
 
 			// Add entry
-			WarrantLocalServiceUtil.addWarrant(userId, summary, quantity, price);
-
+			boolean userHasWarrant = WarrantLocalServiceUtil.userHasWarrant(userId);
+			
+			if(!userHasWarrant){
+				WarrantLocalServiceUtil.addWarrant(userId, summary, quantity, price);
+			}else{
+				SessionErrors.add(actionRequest, "user-already-has-a-valid-warrant");
+				return;
+			}
 		}
 		else {
 
@@ -198,6 +224,7 @@ public class WarrantChangePortlet extends MVCPortlet {
 			mailMessageS.setSubject("Warrant interest");
 			mailMessageS.setTo(new InternetAddress(sellingUser.getEmailAddress()));
 			MessageBusUtil.sendMessage(DestinationNames.MAIL, mailMessageS);
+			
 
 		} catch (PortalException e) {
 			_log.error("PortalException - ",e);

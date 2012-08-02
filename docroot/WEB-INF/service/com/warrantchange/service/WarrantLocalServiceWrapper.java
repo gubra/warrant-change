@@ -286,6 +286,11 @@ public class WarrantLocalServiceWrapper implements WarrantLocalService,
 		return _warrantLocalService.findWarrantsByCreateDate(from, to);
 	}
 
+	public boolean userHasWarrant(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _warrantLocalService.userHasWarrant(userId);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

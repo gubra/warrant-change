@@ -29,8 +29,30 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.warrantchange.model.impl.WarrantUserUniqueIdModelImpl">
+		<attributes>
+			<id name="id">
+				<column name="ID_" />
+			</id>
+			<basic name="uniqueId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="com.warrantchange.model.impl.WarrantImpl" name="Warrant">
 		<table name="warrant" />
+		<attributes />
+	</entity>
+	<entity class="com.warrantchange.model.impl.WarrantUserUniqueIdImpl" name="WarrantUserUniqueId">
+		<table name="warrantUserUniqueId" />
 		<attributes />
 	</entity>
 </entity-mappings>

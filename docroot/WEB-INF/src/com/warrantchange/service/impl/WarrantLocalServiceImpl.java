@@ -131,4 +131,17 @@ public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
 	private DynamicQuery createDynamicQuery() {
 		return DynamicQueryFactoryUtil.forClass(Warrant.class);
 	}
+	
+	public boolean userHasWarrant(long userId) throws SystemException {
+		try {
+			Warrant findByUserId = WarrantUtil.findByUserId(userId);
+			if(findByUserId != null && 
+					!findByUserId.getStatus().equals(WarrantStateType.DELETED.name())){
+				return true;
+			}
+		} catch (NoSuchWarrantException e) {
+			
+		}
+		return false;
+	}
 }

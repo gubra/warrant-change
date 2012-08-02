@@ -3,6 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.warrantchange.model.Warrant" />
+	<import class="com.warrantchange.model.WarrantUserUniqueId" />
 	<class name="com.warrantchange.model.impl.WarrantImpl" table="warrant">
 		<cache usage="read-write" />
 		<id name="id" column="id_" type="long">
@@ -16,5 +17,15 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationWarningSent" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.warrantchange.model.impl.WarrantUserUniqueIdImpl" table="warrantUserUniqueId">
+		<cache usage="read-write" />
+		<id name="id" column="id_" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uniqueId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

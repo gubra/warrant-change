@@ -294,6 +294,11 @@ public class WarrantLocalServiceUtil {
 		return getService().findWarrantsByCreateDate(from, to);
 	}
 
+	public static boolean userHasWarrant(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().userHasWarrant(userId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

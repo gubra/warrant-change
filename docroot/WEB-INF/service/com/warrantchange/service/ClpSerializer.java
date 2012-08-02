@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
 import com.warrantchange.model.WarrantClp;
+import com.warrantchange.model.WarrantUserUniqueIdClp;
 
 import java.lang.reflect.Method;
 
@@ -101,6 +102,10 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals(WarrantClp.class.getName())) {
 			return translateInputWarrant(oldModel);
+		}
+
+		if (oldModelClassName.equals(WarrantUserUniqueIdClp.class.getName())) {
+			return translateInputWarrantUserUniqueId(oldModel);
 		}
 
 		return oldModel;
@@ -210,6 +215,71 @@ public class ClpSerializer {
 		return oldModel;
 	}
 
+	public static Object translateInputWarrantUserUniqueId(
+		BaseModel<?> oldModel) {
+		WarrantUserUniqueIdClp oldCplModel = (WarrantUserUniqueIdClp)oldModel;
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(_classLoader);
+
+			try {
+				Class<?> newModelClass = Class.forName("com.warrantchange.model.impl.WarrantUserUniqueIdImpl",
+						true, _classLoader);
+
+				Object newModel = newModelClass.newInstance();
+
+				Method method0 = newModelClass.getMethod("setId",
+						new Class[] { Long.TYPE });
+
+				Long value0 = new Long(oldCplModel.getId());
+
+				method0.invoke(newModel, value0);
+
+				Method method1 = newModelClass.getMethod("setUniqueId",
+						new Class[] { String.class });
+
+				String value1 = oldCplModel.getUniqueId();
+
+				method1.invoke(newModel, value1);
+
+				Method method2 = newModelClass.getMethod("setUserId",
+						new Class[] { Long.TYPE });
+
+				Long value2 = new Long(oldCplModel.getUserId());
+
+				method2.invoke(newModel, value2);
+
+				Method method3 = newModelClass.getMethod("setCreateDate",
+						new Class[] { Date.class });
+
+				Date value3 = oldCplModel.getCreateDate();
+
+				method3.invoke(newModel, value3);
+
+				Method method4 = newModelClass.getMethod("setModifiedDate",
+						new Class[] { Date.class });
+
+				Date value4 = oldCplModel.getModifiedDate();
+
+				method4.invoke(newModel, value4);
+
+				return newModel;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
+
+		return oldModel;
+	}
+
 	public static Object translateInput(Object obj) {
 		if (obj instanceof BaseModel<?>) {
 			return translateInput((BaseModel<?>)obj);
@@ -229,6 +299,11 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals("com.warrantchange.model.impl.WarrantImpl")) {
 			return translateOutputWarrant(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"com.warrantchange.model.impl.WarrantUserUniqueIdImpl")) {
+			return translateOutputWarrantUserUniqueId(oldModel);
 		}
 
 		return oldModel;
@@ -327,6 +402,63 @@ public class ClpSerializer {
 						(Object[])null);
 
 				newModel.setExpirationWarningSent(value8);
+
+				return newModel;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
+
+		return oldModel;
+	}
+
+	public static Object translateOutputWarrantUserUniqueId(
+		BaseModel<?> oldModel) {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(_classLoader);
+
+			try {
+				WarrantUserUniqueIdClp newModel = new WarrantUserUniqueIdClp();
+
+				Class<?> oldModelClass = oldModel.getClass();
+
+				Method method0 = oldModelClass.getMethod("getId");
+
+				Long value0 = (Long)method0.invoke(oldModel, (Object[])null);
+
+				newModel.setId(value0);
+
+				Method method1 = oldModelClass.getMethod("getUniqueId");
+
+				String value1 = (String)method1.invoke(oldModel, (Object[])null);
+
+				newModel.setUniqueId(value1);
+
+				Method method2 = oldModelClass.getMethod("getUserId");
+
+				Long value2 = (Long)method2.invoke(oldModel, (Object[])null);
+
+				newModel.setUserId(value2);
+
+				Method method3 = oldModelClass.getMethod("getCreateDate");
+
+				Date value3 = (Date)method3.invoke(oldModel, (Object[])null);
+
+				newModel.setCreateDate(value3);
+
+				Method method4 = oldModelClass.getMethod("getModifiedDate");
+
+				Date value4 = (Date)method4.invoke(oldModel, (Object[])null);
+
+				newModel.setModifiedDate(value4);
 
 				return newModel;
 			}
