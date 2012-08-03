@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.warrantchange.service.ClpSerializer;
 import com.warrantchange.service.WarrantLocalServiceUtil;
 import com.warrantchange.service.WarrantServiceUtil;
+import com.warrantchange.service.WarrantUserEmailLogLocalServiceUtil;
+import com.warrantchange.service.WarrantUserEmailLogServiceUtil;
 import com.warrantchange.service.WarrantUserUniqueIdLocalServiceUtil;
 import com.warrantchange.service.WarrantUserUniqueIdServiceUtil;
 
@@ -41,6 +43,9 @@ public class ClpMessageListener extends BaseMessageListener {
 			WarrantLocalServiceUtil.clearService();
 
 			WarrantServiceUtil.clearService();
+			WarrantUserEmailLogLocalServiceUtil.clearService();
+
+			WarrantUserEmailLogServiceUtil.clearService();
 			WarrantUserUniqueIdLocalServiceUtil.clearService();
 
 			WarrantUserUniqueIdServiceUtil.clearService();

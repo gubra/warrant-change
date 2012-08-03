@@ -223,6 +223,16 @@ currentURLObj.setParameter("struts_action", "/warrantchange/view");
 
 boolean userHasWarrant = WarrantLocalServiceUtil.userHasWarrant(user.getUserId());
 
+List<Role> roles = user.getRoles();
+
+List<Role> userRoles = user.getRoles();
+boolean isAdmin = false;
+for(Role r : userRoles){
+    if("WC Admin".equalsIgnoreCase(r.getName())){
+    	isAdmin = true;
+    }
+}
+
 %>
 
 <c:choose>
@@ -270,6 +280,7 @@ boolean userHasWarrant = WarrantLocalServiceUtil.userHasWarrant(user.getUserId()
 				List resultRows = searchContainer.getResultRows();
 		
 				for (int i = 0; i < results.size(); i++) {
+					
 					Warrant entry = results.get(i);
 		
 					entry = entry.toEscapedModel();
@@ -300,7 +311,7 @@ boolean userHasWarrant = WarrantLocalServiceUtil.userHasWarrant(user.getUserId()
 					row.addText(u.getLocale().getDisplayCountry(), rowURL);
 					
 					// Summ
-					/* row.addText(entry.getSummary(), rowURL); */
+					//row.addText(entry.getSummary(), rowURL);
 		
 					// Qty
 					row.addText(String.valueOf(entry.getQuantity()), rowURL);
@@ -317,7 +328,7 @@ boolean userHasWarrant = WarrantLocalServiceUtil.userHasWarrant(user.getUserId()
 					
 					// Action
 					//row.addButton("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL.toString());
-					if(entry.getUserId() == user.getUserId()){
+					if(entry.getUserId() == user.getUserId() || isAdmin){
 						row.addText("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL);
 						//row.addButton("right", SearchEntry.DEFAULT_VALIGN, "Delete", deleteURL.toString());
 					}else{
@@ -331,9 +342,8 @@ boolean userHasWarrant = WarrantLocalServiceUtil.userHasWarrant(user.getUserId()
 				}
 				%>
 		
-
 				<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
-
+				
 		</aui:form>
 		
 		<aui:script>

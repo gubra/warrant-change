@@ -396,6 +396,9 @@ public class WarrantUserUniqueIdPersistenceImpl extends BasePersistenceImpl<Warr
 		warrantUserUniqueIdImpl.setUserId(warrantUserUniqueId.getUserId());
 		warrantUserUniqueIdImpl.setCreateDate(warrantUserUniqueId.getCreateDate());
 		warrantUserUniqueIdImpl.setModifiedDate(warrantUserUniqueId.getModifiedDate());
+		warrantUserUniqueIdImpl.setSentEmail(warrantUserUniqueId.getSentEmail());
+		warrantUserUniqueIdImpl.setSentDate(warrantUserUniqueId.getSentDate());
+		warrantUserUniqueIdImpl.setSentOmicode(warrantUserUniqueId.getSentOmicode());
 
 		return warrantUserUniqueIdImpl;
 	}
@@ -1114,6 +1117,8 @@ public class WarrantUserUniqueIdPersistenceImpl extends BasePersistenceImpl<Warr
 
 	@BeanReference(type = WarrantPersistence.class)
 	protected WarrantPersistence warrantPersistence;
+	@BeanReference(type = WarrantUserEmailLogPersistence.class)
+	protected WarrantUserEmailLogPersistence warrantUserEmailLogPersistence;
 	@BeanReference(type = WarrantUserUniqueIdPersistence.class)
 	protected WarrantUserUniqueIdPersistence warrantUserUniqueIdPersistence;
 	@BeanReference(type = ResourcePersistence.class)

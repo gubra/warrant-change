@@ -15,6 +15,7 @@
 package com.warrantchange.service.impl;
 
 import com.warrantchange.service.base.WarrantUserUniqueIdLocalServiceBaseImpl;
+import com.warrantchange.service.persistence.WarrantUserUniqueIdUtil;
 
 /**
  * The implementation of the WarrantUserUniqueId local service.
@@ -37,4 +38,11 @@ public class WarrantUserUniqueIdLocalServiceImpl
 	 *
 	 * Never reference this interface directly. Always use {@link com.warrantchange.service.WarrantUserUniqueIdLocalServiceUtil} to access the WarrantUserUniqueId local service.
 	 */
+	
+	public com.warrantchange.model.WarrantUserUniqueId findByuniqueId(
+			java.lang.String uniqueId)
+			throws com.liferay.portal.kernel.exception.SystemException,
+				com.warrantchange.NoSuchWarrantUserUniqueIdException {
+			return WarrantUserUniqueIdUtil.findByuniqueId(uniqueId);
+		}
 }

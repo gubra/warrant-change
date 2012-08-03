@@ -42,9 +42,12 @@ import com.warrantchange.model.WarrantUserUniqueId;
 
 import com.warrantchange.service.WarrantLocalService;
 import com.warrantchange.service.WarrantService;
+import com.warrantchange.service.WarrantUserEmailLogLocalService;
+import com.warrantchange.service.WarrantUserEmailLogService;
 import com.warrantchange.service.WarrantUserUniqueIdLocalService;
 import com.warrantchange.service.WarrantUserUniqueIdService;
 import com.warrantchange.service.persistence.WarrantPersistence;
+import com.warrantchange.service.persistence.WarrantUserEmailLogPersistence;
 import com.warrantchange.service.persistence.WarrantUserUniqueIdPersistence;
 
 import java.io.Serializable;
@@ -377,6 +380,63 @@ public abstract class WarrantUserUniqueIdLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the WarrantUserEmailLog local service.
+	 *
+	 * @return the WarrantUserEmailLog local service
+	 */
+	public WarrantUserEmailLogLocalService getWarrantUserEmailLogLocalService() {
+		return warrantUserEmailLogLocalService;
+	}
+
+	/**
+	 * Sets the WarrantUserEmailLog local service.
+	 *
+	 * @param warrantUserEmailLogLocalService the WarrantUserEmailLog local service
+	 */
+	public void setWarrantUserEmailLogLocalService(
+		WarrantUserEmailLogLocalService warrantUserEmailLogLocalService) {
+		this.warrantUserEmailLogLocalService = warrantUserEmailLogLocalService;
+	}
+
+	/**
+	 * Returns the WarrantUserEmailLog remote service.
+	 *
+	 * @return the WarrantUserEmailLog remote service
+	 */
+	public WarrantUserEmailLogService getWarrantUserEmailLogService() {
+		return warrantUserEmailLogService;
+	}
+
+	/**
+	 * Sets the WarrantUserEmailLog remote service.
+	 *
+	 * @param warrantUserEmailLogService the WarrantUserEmailLog remote service
+	 */
+	public void setWarrantUserEmailLogService(
+		WarrantUserEmailLogService warrantUserEmailLogService) {
+		this.warrantUserEmailLogService = warrantUserEmailLogService;
+	}
+
+	/**
+	 * Returns the WarrantUserEmailLog persistence.
+	 *
+	 * @return the WarrantUserEmailLog persistence
+	 */
+	public WarrantUserEmailLogPersistence getWarrantUserEmailLogPersistence() {
+		return warrantUserEmailLogPersistence;
+	}
+
+	/**
+	 * Sets the WarrantUserEmailLog persistence.
+	 *
+	 * @param warrantUserEmailLogPersistence the WarrantUserEmailLog persistence
+	 */
+	public void setWarrantUserEmailLogPersistence(
+		WarrantUserEmailLogPersistence warrantUserEmailLogPersistence) {
+		this.warrantUserEmailLogPersistence = warrantUserEmailLogPersistence;
+	}
+
+	/**
 	 * Returns the WarrantUserUniqueId local service.
 	 *
 	 * @return the WarrantUserUniqueId local service
@@ -621,6 +681,12 @@ public abstract class WarrantUserUniqueIdLocalServiceBaseImpl
 	protected WarrantService warrantService;
 	@BeanReference(type = WarrantPersistence.class)
 	protected WarrantPersistence warrantPersistence;
+	@BeanReference(type = WarrantUserEmailLogLocalService.class)
+	protected WarrantUserEmailLogLocalService warrantUserEmailLogLocalService;
+	@BeanReference(type = WarrantUserEmailLogService.class)
+	protected WarrantUserEmailLogService warrantUserEmailLogService;
+	@BeanReference(type = WarrantUserEmailLogPersistence.class)
+	protected WarrantUserEmailLogPersistence warrantUserEmailLogPersistence;
 	@BeanReference(type = WarrantUserUniqueIdLocalService.class)
 	protected WarrantUserUniqueIdLocalService warrantUserUniqueIdLocalService;
 	@BeanReference(type = WarrantUserUniqueIdService.class)

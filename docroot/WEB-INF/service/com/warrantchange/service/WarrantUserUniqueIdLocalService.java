@@ -235,4 +235,9 @@ public interface WarrantUserUniqueIdLocalService
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public com.warrantchange.model.WarrantUserUniqueId findByuniqueId(
+		java.lang.String uniqueId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.warrantchange.NoSuchWarrantUserUniqueIdException;
 }

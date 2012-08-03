@@ -253,6 +253,10 @@ doubleFormat.setMinimumFractionDigits(2);
 	<aui:model-context bean="<%= entry %>" model="<%= Warrant.class %>" />
 
 	<aui:fieldset>
+	
+		<aui:input name="summary" helpMessage="Warrant Number" label="Warrant Number">
+			<aui:validator name="required"/>
+		</aui:input>
 
 		<aui:input name="quantity" helpMessage="Mennyiség (csak 10 többszöröse lehet)" label="Mennyiség (csak 10 többszöröse lehet)">
 			<aui:validator name="custom" errorMessage="Csak 10 többszöröse lehet!">

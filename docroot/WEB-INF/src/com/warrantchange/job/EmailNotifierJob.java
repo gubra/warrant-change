@@ -11,6 +11,7 @@ import javax.mail.internet.InternetAddress;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -23,7 +24,9 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.util.ContentUtil;
 import com.warrantchange.model.Warrant;
+import com.warrantchange.model.WarrantUserEmailLog;
 import com.warrantchange.service.WarrantLocalServiceUtil;
+import com.warrantchange.service.WarrantUserEmailLogLocalServiceUtil;
 
 public class EmailNotifierJob implements MessageListener {
 
@@ -93,6 +96,9 @@ public class EmailNotifierJob implements MessageListener {
 						WarrantLocalServiceUtil.deleteWarrant(warrant);
 						break;
 					}
+					
+					logEmailMessageSent(subject, body);
+					
 					log.info("Notification email sent to "+to);
 				} catch (Exception e) {
 					log.error(String.format("Failed to send notification email for warrant id: %s to: [userId=%s] %s"
@@ -103,6 +109,22 @@ public class EmailNotifierJob implements MessageListener {
 				log.info("Notification emails sent");
 			}
 		}
+	}
+
+	private void logEmailMessageSent(String subject, String body)
+			throws SystemException {
+		
+		WarrantUserEmailLog createWarrantUserEmailLog = 
+				WarrantUserEmailLogLocalServiceUtil
+					.createWarrantUserEmailLog(CounterLocalServiceUtil.increment());
+		
+		if(createWarrantUserEmailLog != null){
+			createWarrantUserEmailLog.setSubject(subject);
+			createWarrantUserEmailLog.setBodyContent(body);
+			createWarrantUserEmailLog.setCreateDate(new Date());
+		}
+		
+		WarrantUserEmailLogLocalServiceUtil.updateWarrantUserEmailLog(createWarrantUserEmailLog);
 	}
 
 	private static void sendEmail(Warrant warrant, String to, String subject, String body) throws AddressException {

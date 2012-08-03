@@ -35,7 +35,7 @@ public class WarrantUserUniqueIdCacheModel implements CacheModel<WarrantUserUniq
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{id=");
 		sb.append(id);
@@ -47,6 +47,12 @@ public class WarrantUserUniqueIdCacheModel implements CacheModel<WarrantUserUniq
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", sentEmail=");
+		sb.append(sentEmail);
+		sb.append(", sentDate=");
+		sb.append(sentDate);
+		sb.append(", sentOmicode=");
+		sb.append(sentOmicode);
 		sb.append("}");
 
 		return sb.toString();
@@ -80,6 +86,27 @@ public class WarrantUserUniqueIdCacheModel implements CacheModel<WarrantUserUniq
 			warrantUserUniqueIdImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (sentEmail == null) {
+			warrantUserUniqueIdImpl.setSentEmail(StringPool.BLANK);
+		}
+		else {
+			warrantUserUniqueIdImpl.setSentEmail(sentEmail);
+		}
+
+		if (sentDate == Long.MIN_VALUE) {
+			warrantUserUniqueIdImpl.setSentDate(null);
+		}
+		else {
+			warrantUserUniqueIdImpl.setSentDate(new Date(sentDate));
+		}
+
+		if (sentOmicode == null) {
+			warrantUserUniqueIdImpl.setSentOmicode(StringPool.BLANK);
+		}
+		else {
+			warrantUserUniqueIdImpl.setSentOmicode(sentOmicode);
+		}
+
 		warrantUserUniqueIdImpl.resetOriginalValues();
 
 		return warrantUserUniqueIdImpl;
@@ -90,4 +117,7 @@ public class WarrantUserUniqueIdCacheModel implements CacheModel<WarrantUserUniq
 	public long userId;
 	public long createDate;
 	public long modifiedDate;
+	public String sentEmail;
+	public long sentDate;
+	public String sentOmicode;
 }

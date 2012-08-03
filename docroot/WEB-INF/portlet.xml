@@ -3,7 +3,7 @@
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0">
 	<portlet>
 		<portlet-name>WarrantChange</portlet-name>
-		<display-name>WarrantChange</display-name>
+		<display-name>Warrant Change</display-name>
 		<portlet-class>com.warrantchange.portlet.WarrantChangePortlet</portlet-class>
 		
 <!-- 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
@@ -20,6 +20,10 @@
 		<init-param>
 			<name>view-template</name>
 			<value>/html/portlet/warrantchange/view.jsp</value>
+		</init-param>
+		<init-param>
+			<name>regex</name>
+			<value>2manysecrets</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

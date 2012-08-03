@@ -146,6 +146,50 @@ public interface WarrantUserUniqueIdModel extends BaseModel<WarrantUserUniqueId>
 	 */
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the sent email of this WarrantUserUniqueId.
+	 *
+	 * @return the sent email of this WarrantUserUniqueId
+	 */
+	@AutoEscape
+	public String getSentEmail();
+
+	/**
+	 * Sets the sent email of this WarrantUserUniqueId.
+	 *
+	 * @param sentEmail the sent email of this WarrantUserUniqueId
+	 */
+	public void setSentEmail(String sentEmail);
+
+	/**
+	 * Returns the sent date of this WarrantUserUniqueId.
+	 *
+	 * @return the sent date of this WarrantUserUniqueId
+	 */
+	public Date getSentDate();
+
+	/**
+	 * Sets the sent date of this WarrantUserUniqueId.
+	 *
+	 * @param sentDate the sent date of this WarrantUserUniqueId
+	 */
+	public void setSentDate(Date sentDate);
+
+	/**
+	 * Returns the sent omicode of this WarrantUserUniqueId.
+	 *
+	 * @return the sent omicode of this WarrantUserUniqueId
+	 */
+	@AutoEscape
+	public String getSentOmicode();
+
+	/**
+	 * Sets the sent omicode of this WarrantUserUniqueId.
+	 *
+	 * @param sentOmicode the sent omicode of this WarrantUserUniqueId
+	 */
+	public void setSentOmicode(String sentOmicode);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

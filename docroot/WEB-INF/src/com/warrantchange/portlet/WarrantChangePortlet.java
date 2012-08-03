@@ -1,6 +1,8 @@
 package com.warrantchange.portlet;
 
 import java.io.IOException; 
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -14,6 +16,7 @@ import javax.portlet.PortletException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.pattern.LogEvent;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +30,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -34,14 +38,18 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 import com.warrantchange.job.MailMessageLogger;
 import com.warrantchange.model.Warrant;
+import com.warrantchange.model.WarrantUserEmailLog;
 import com.warrantchange.model.WarrantUserUniqueId;
 import com.warrantchange.model.impl.WarrantStateType;
 import com.warrantchange.service.WarrantLocalServiceUtil;
+import com.warrantchange.service.WarrantUserEmailLogLocalServiceUtil;
 import com.warrantchange.service.WarrantUserUniqueIdLocalServiceUtil;
 
 public class WarrantChangePortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactory.getLog(MVCPortlet.class);
+	
+	String regex;
 
 	public WarrantChangePortlet() {
 	}
@@ -49,8 +57,14 @@ public class WarrantChangePortlet extends MVCPortlet {
 	@Override
 	public void init() throws PortletException {
 		super.init();
-		MessageBusUtil.registerMessageListener(
-				DestinationNames.MAIL, new MailMessageLogger());
+//		MessageBusUtil.registerMessageListener(
+//				DestinationNames.MAIL, new MailMessageLogger());
+		
+		regex = this.getInitParameter("regex");
+		
+		if(regex == null){
+			regex = "2manysecrets";
+		}
 		
 //		try {
 //			WarrantUserUniqueId createWarrantUserUniqueId = WarrantUserUniqueIdLocalServiceUtil.createWarrantUserUniqueId(CounterLocalServiceUtil.increment());
@@ -127,13 +141,15 @@ public class WarrantChangePortlet extends MVCPortlet {
 		long userId = themeDisplay.getUserId();
 
 		String summary = ParamUtil.getString(actionRequest, "summary");
+		
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 		double price = ParamUtil.getDouble(actionRequest, "price");
 		
 		System.out.println("price: "+price);
 		
-		if(summary == null || summary.length()<=0){
-			//SessionErrors.add(actionRequest,"summary-required");
+		if(summary == null || summary.length()<=0 || !summary.matches(regex)){
+			SessionErrors.add(actionRequest,"summary-required-or-not-valid");
+			return;
 		}
 		
 		if(quantity <= 0){
@@ -179,9 +195,35 @@ public class WarrantChangePortlet extends MVCPortlet {
 	}
 	
 	protected void deleteEntry(ActionRequest actionRequest) throws Exception {
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
-		System.out.println("WarrantLocalService, marking Warrant as deleted : "+entryId);
+		long userId = themeDisplay.getUserId();
+		
+		User currentUser = UserLocalServiceUtil.getUser(userId);
+		
 		Warrant warrant = WarrantLocalServiceUtil.getWarrant(entryId);
+		boolean isAdmin = false;
+		
+		List<Role> roles = currentUser.getRoles();
+		
+		for(Role r : roles){
+			if(!"WC Admin".equalsIgnoreCase(r.getName())){
+		    	isAdmin = true;
+		    }
+		}
+		
+		if(warrant.getUserId() != userId){
+			if(!isAdmin){
+				System.out.println("This user does not have rights to delete this warrant : "+userId);
+				return;
+			}
+		}
+		
+		System.out.println("WarrantLocalService, marking Warrant as deleted : "+entryId);
+		
 		warrant.setStatus(WarrantStateType.DELETED.name());
 		WarrantLocalServiceUtil.updateWarrant(warrant);
 //		WarrantLocalServiceUtil.deleteWarrant(entryId);
@@ -221,10 +263,13 @@ public class WarrantChangePortlet extends MVCPortlet {
 			MailMessage mailMessageS = new MailMessage();
 			mailMessageS.setBody(mailMessage);
 			mailMessageS.setFrom(new InternetAddress(currentUser.getEmailAddress()));
-			mailMessageS.setSubject("Warrant interest");
+			String subject = "Warrant interest";
+			mailMessageS.setSubject(subject);
 			mailMessageS.setTo(new InternetAddress(sellingUser.getEmailAddress()));
 			MessageBusUtil.sendMessage(DestinationNames.MAIL, mailMessageS);
 			
+			
+			logEmailMessageSent(subject, mailMessage);
 
 		} catch (PortalException e) {
 			_log.error("PortalException - ",e);
@@ -245,5 +290,19 @@ public class WarrantChangePortlet extends MVCPortlet {
 		
 	}
 
+	
+	private static void logEmailMessageSent(String subject, String body)
+			throws SystemException {
+		WarrantUserEmailLog createWarrantUserEmailLog = 
+				WarrantUserEmailLogLocalServiceUtil.createWarrantUserEmailLog(CounterLocalServiceUtil.increment());
+		
+		if(createWarrantUserEmailLog != null){
+			createWarrantUserEmailLog.setSubject(subject);
+			createWarrantUserEmailLog.setBodyContent(body);
+			createWarrantUserEmailLog.setCreateDate(new Date());
+		}
+		
+		WarrantUserEmailLogLocalServiceUtil.updateWarrantUserEmailLog(createWarrantUserEmailLog);
+	}
 
 }

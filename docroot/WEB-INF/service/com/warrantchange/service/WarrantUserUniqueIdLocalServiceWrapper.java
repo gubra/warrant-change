@@ -258,6 +258,13 @@ public class WarrantUserUniqueIdLocalServiceWrapper
 		_warrantUserUniqueIdLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public com.warrantchange.model.WarrantUserUniqueId findByuniqueId(
+		java.lang.String uniqueId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.warrantchange.NoSuchWarrantUserUniqueIdException {
+		return _warrantUserUniqueIdLocalService.findByuniqueId(uniqueId);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

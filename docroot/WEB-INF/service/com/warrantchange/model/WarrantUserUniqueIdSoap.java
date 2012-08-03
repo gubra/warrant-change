@@ -36,6 +36,9 @@ public class WarrantUserUniqueIdSoap implements Serializable {
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setSentEmail(model.getSentEmail());
+		soapModel.setSentDate(model.getSentDate());
+		soapModel.setSentOmicode(model.getSentOmicode());
 
 		return soapModel;
 	}
@@ -131,9 +134,36 @@ public class WarrantUserUniqueIdSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getSentEmail() {
+		return _sentEmail;
+	}
+
+	public void setSentEmail(String sentEmail) {
+		_sentEmail = sentEmail;
+	}
+
+	public Date getSentDate() {
+		return _sentDate;
+	}
+
+	public void setSentDate(Date sentDate) {
+		_sentDate = sentDate;
+	}
+
+	public String getSentOmicode() {
+		return _sentOmicode;
+	}
+
+	public void setSentOmicode(String sentOmicode) {
+		_sentOmicode = sentOmicode;
+	}
+
 	private long _id;
 	private String _uniqueId;
 	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _sentEmail;
+	private Date _sentDate;
+	private String _sentOmicode;
 }

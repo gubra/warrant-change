@@ -167,6 +167,60 @@ public class WarrantUserUniqueIdWrapper implements WarrantUserUniqueId,
 		_warrantUserUniqueId.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	* Returns the sent email of this WarrantUserUniqueId.
+	*
+	* @return the sent email of this WarrantUserUniqueId
+	*/
+	public java.lang.String getSentEmail() {
+		return _warrantUserUniqueId.getSentEmail();
+	}
+
+	/**
+	* Sets the sent email of this WarrantUserUniqueId.
+	*
+	* @param sentEmail the sent email of this WarrantUserUniqueId
+	*/
+	public void setSentEmail(java.lang.String sentEmail) {
+		_warrantUserUniqueId.setSentEmail(sentEmail);
+	}
+
+	/**
+	* Returns the sent date of this WarrantUserUniqueId.
+	*
+	* @return the sent date of this WarrantUserUniqueId
+	*/
+	public java.util.Date getSentDate() {
+		return _warrantUserUniqueId.getSentDate();
+	}
+
+	/**
+	* Sets the sent date of this WarrantUserUniqueId.
+	*
+	* @param sentDate the sent date of this WarrantUserUniqueId
+	*/
+	public void setSentDate(java.util.Date sentDate) {
+		_warrantUserUniqueId.setSentDate(sentDate);
+	}
+
+	/**
+	* Returns the sent omicode of this WarrantUserUniqueId.
+	*
+	* @return the sent omicode of this WarrantUserUniqueId
+	*/
+	public java.lang.String getSentOmicode() {
+		return _warrantUserUniqueId.getSentOmicode();
+	}
+
+	/**
+	* Sets the sent omicode of this WarrantUserUniqueId.
+	*
+	* @param sentOmicode the sent omicode of this WarrantUserUniqueId
+	*/
+	public void setSentOmicode(java.lang.String sentOmicode) {
+		_warrantUserUniqueId.setSentOmicode(sentOmicode);
+	}
+
 	public boolean isNew() {
 		return _warrantUserUniqueId.isNew();
 	}

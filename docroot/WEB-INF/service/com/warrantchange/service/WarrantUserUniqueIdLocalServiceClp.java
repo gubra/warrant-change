@@ -87,6 +87,9 @@ public class WarrantUserUniqueIdLocalServiceClp
 
 		_setBeanIdentifierMethodKey16 = new MethodKey(_classLoaderProxy.getClassName(),
 				"setBeanIdentifier", java.lang.String.class);
+
+		_findByuniqueIdMethodKey17 = new MethodKey(_classLoaderProxy.getClassName(),
+				"findByuniqueId", java.lang.String.class);
 	}
 
 	public com.warrantchange.model.WarrantUserUniqueId addWarrantUserUniqueId(
@@ -553,6 +556,39 @@ public class WarrantUserUniqueIdLocalServiceClp
 		}
 	}
 
+	public com.warrantchange.model.WarrantUserUniqueId findByuniqueId(
+		java.lang.String uniqueId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.warrantchange.NoSuchWarrantUserUniqueIdException {
+		Object returnObj = null;
+
+		MethodHandler methodHandler = new MethodHandler(_findByuniqueIdMethodKey17,
+				ClpSerializer.translateInput(uniqueId));
+
+		try {
+			returnObj = _classLoaderProxy.invoke(methodHandler);
+		}
+		catch (Throwable t) {
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof com.warrantchange.NoSuchWarrantUserUniqueIdException) {
+				throw (com.warrantchange.NoSuchWarrantUserUniqueIdException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.warrantchange.model.WarrantUserUniqueId)ClpSerializer.translateOutput(returnObj);
+	}
+
 	public ClassLoaderProxy getClassLoaderProxy() {
 		return _classLoaderProxy;
 	}
@@ -575,4 +611,5 @@ public class WarrantUserUniqueIdLocalServiceClp
 	private MethodKey _updateWarrantUserUniqueIdMethodKey14;
 	private MethodKey _getBeanIdentifierMethodKey15;
 	private MethodKey _setBeanIdentifierMethodKey16;
+	private MethodKey _findByuniqueIdMethodKey17;
 }

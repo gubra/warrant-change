@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.1.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_1_0.dtd">
+
+<hook>
+	
+	<portal-properties>portal-ext.properties</portal-properties>
+	<custom-jsp-dir>/META-INF/custom-jsps</custom-jsp-dir>
+	
+	<!-- <struts-action>
+		<struts-action-path>/login/create_account</struts-action-path>
+		<struts-action-impl>com.warrantchange.action.CreateAccountAction</struts-action-impl>
+	</struts-action> -->
+	
+	 <service>
+                <service-type>com.liferay.portal.service.UserLocalService</service-type>
+                <service-impl>com.warrantchange.action.WarrantUserLocalServiceImpl</service-impl>
+     </service>
+
+</hook>

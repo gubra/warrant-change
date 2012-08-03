@@ -22,8 +22,6 @@
 		<column name="modifiedDate" type="Date" />
 		<column name="expirationWarningSent" type="boolean"/>
 
-		<!-- Other fields -->
-
 		<!-- Order -->
 
 		<order by="desc">
@@ -53,8 +51,10 @@
 		<column name="userId" type="long" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
+		
+		<column name="sentEmail" type="String" />
+		<column name="sentDate" type="Date" />
+		<column name="sentOmicode" type="String" />
 
 		<!-- Order -->
 
@@ -66,6 +66,29 @@
         <finder name="uniqueId" return-type="WarrantUserUniqueId" unique="true">
             <finder-column name="uniqueId"></finder-column>
         </finder>
+        <finder name="userId" return-type="WarrantUserUniqueId">
+            <finder-column name="userId"></finder-column>
+        </finder>
+	</entity>
+	
+	<entity name="WarrantUserEmailLog" local-service="true" remote-service="true" human-name="WarrantUserEmailLog" table="warrantUserEmailLog" uuid="false" uuid-accessor="false">
+
+		<!-- PK fields -->
+
+		<column name="id" type="long" primary="true" />
+		<column name="subject" type="String" />
+		<column name="bodyContent" type="String" />
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
         <finder name="userId" return-type="WarrantUserUniqueId">
             <finder-column name="userId"></finder-column>
         </finder>

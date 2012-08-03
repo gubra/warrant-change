@@ -10,6 +10,15 @@
 		<property name="service" ref="com.warrantchange.service.WarrantService" />
 	</bean>
 	<bean id="com.warrantchange.service.persistence.WarrantPersistence" class="com.warrantchange.service.persistence.WarrantPersistenceImpl" parent="basePersistence" />
+	<bean id="com.warrantchange.service.WarrantUserEmailLogLocalService" class="com.warrantchange.service.impl.WarrantUserEmailLogLocalServiceImpl" />
+	<bean id="com.warrantchange.service.WarrantUserEmailLogLocalServiceUtil" class="com.warrantchange.service.WarrantUserEmailLogLocalServiceUtil">
+		<property name="service" ref="com.warrantchange.service.WarrantUserEmailLogLocalService" />
+	</bean>
+	<bean id="com.warrantchange.service.WarrantUserEmailLogService" class="com.warrantchange.service.impl.WarrantUserEmailLogServiceImpl" />
+	<bean id="com.warrantchange.service.WarrantUserEmailLogServiceUtil" class="com.warrantchange.service.WarrantUserEmailLogServiceUtil">
+		<property name="service" ref="com.warrantchange.service.WarrantUserEmailLogService" />
+	</bean>
+	<bean id="com.warrantchange.service.persistence.WarrantUserEmailLogPersistence" class="com.warrantchange.service.persistence.WarrantUserEmailLogPersistenceImpl" parent="basePersistence" />
 	<bean id="com.warrantchange.service.WarrantUserUniqueIdLocalService" class="com.warrantchange.service.impl.WarrantUserUniqueIdLocalServiceImpl" />
 	<bean id="com.warrantchange.service.WarrantUserUniqueIdLocalServiceUtil" class="com.warrantchange.service.WarrantUserUniqueIdLocalServiceUtil">
 		<property name="service" ref="com.warrantchange.service.WarrantUserUniqueIdLocalService" />

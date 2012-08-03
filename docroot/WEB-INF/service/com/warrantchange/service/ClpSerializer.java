@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 
 import com.warrantchange.model.WarrantClp;
+import com.warrantchange.model.WarrantUserEmailLogClp;
 import com.warrantchange.model.WarrantUserUniqueIdClp;
 
 import java.lang.reflect.Method;
@@ -102,6 +103,10 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals(WarrantClp.class.getName())) {
 			return translateInputWarrant(oldModel);
+		}
+
+		if (oldModelClassName.equals(WarrantUserEmailLogClp.class.getName())) {
+			return translateInputWarrantUserEmailLog(oldModel);
 		}
 
 		if (oldModelClassName.equals(WarrantUserUniqueIdClp.class.getName())) {
@@ -215,6 +220,78 @@ public class ClpSerializer {
 		return oldModel;
 	}
 
+	public static Object translateInputWarrantUserEmailLog(
+		BaseModel<?> oldModel) {
+		WarrantUserEmailLogClp oldCplModel = (WarrantUserEmailLogClp)oldModel;
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(_classLoader);
+
+			try {
+				Class<?> newModelClass = Class.forName("com.warrantchange.model.impl.WarrantUserEmailLogImpl",
+						true, _classLoader);
+
+				Object newModel = newModelClass.newInstance();
+
+				Method method0 = newModelClass.getMethod("setId",
+						new Class[] { Long.TYPE });
+
+				Long value0 = new Long(oldCplModel.getId());
+
+				method0.invoke(newModel, value0);
+
+				Method method1 = newModelClass.getMethod("setSubject",
+						new Class[] { String.class });
+
+				String value1 = oldCplModel.getSubject();
+
+				method1.invoke(newModel, value1);
+
+				Method method2 = newModelClass.getMethod("setBodyContent",
+						new Class[] { String.class });
+
+				String value2 = oldCplModel.getBodyContent();
+
+				method2.invoke(newModel, value2);
+
+				Method method3 = newModelClass.getMethod("setUserId",
+						new Class[] { Long.TYPE });
+
+				Long value3 = new Long(oldCplModel.getUserId());
+
+				method3.invoke(newModel, value3);
+
+				Method method4 = newModelClass.getMethod("setCreateDate",
+						new Class[] { Date.class });
+
+				Date value4 = oldCplModel.getCreateDate();
+
+				method4.invoke(newModel, value4);
+
+				Method method5 = newModelClass.getMethod("setModifiedDate",
+						new Class[] { Date.class });
+
+				Date value5 = oldCplModel.getModifiedDate();
+
+				method5.invoke(newModel, value5);
+
+				return newModel;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
+
+		return oldModel;
+	}
+
 	public static Object translateInputWarrantUserUniqueId(
 		BaseModel<?> oldModel) {
 		WarrantUserUniqueIdClp oldCplModel = (WarrantUserUniqueIdClp)oldModel;
@@ -267,6 +344,27 @@ public class ClpSerializer {
 
 				method4.invoke(newModel, value4);
 
+				Method method5 = newModelClass.getMethod("setSentEmail",
+						new Class[] { String.class });
+
+				String value5 = oldCplModel.getSentEmail();
+
+				method5.invoke(newModel, value5);
+
+				Method method6 = newModelClass.getMethod("setSentDate",
+						new Class[] { Date.class });
+
+				Date value6 = oldCplModel.getSentDate();
+
+				method6.invoke(newModel, value6);
+
+				Method method7 = newModelClass.getMethod("setSentOmicode",
+						new Class[] { String.class });
+
+				String value7 = oldCplModel.getSentOmicode();
+
+				method7.invoke(newModel, value7);
+
 				return newModel;
 			}
 			catch (Exception e) {
@@ -299,6 +397,11 @@ public class ClpSerializer {
 
 		if (oldModelClassName.equals("com.warrantchange.model.impl.WarrantImpl")) {
 			return translateOutputWarrant(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"com.warrantchange.model.impl.WarrantUserEmailLogImpl")) {
+			return translateOutputWarrantUserEmailLog(oldModel);
 		}
 
 		if (oldModelClassName.equals(
@@ -416,6 +519,69 @@ public class ClpSerializer {
 		return oldModel;
 	}
 
+	public static Object translateOutputWarrantUserEmailLog(
+		BaseModel<?> oldModel) {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try {
+			currentThread.setContextClassLoader(_classLoader);
+
+			try {
+				WarrantUserEmailLogClp newModel = new WarrantUserEmailLogClp();
+
+				Class<?> oldModelClass = oldModel.getClass();
+
+				Method method0 = oldModelClass.getMethod("getId");
+
+				Long value0 = (Long)method0.invoke(oldModel, (Object[])null);
+
+				newModel.setId(value0);
+
+				Method method1 = oldModelClass.getMethod("getSubject");
+
+				String value1 = (String)method1.invoke(oldModel, (Object[])null);
+
+				newModel.setSubject(value1);
+
+				Method method2 = oldModelClass.getMethod("getBodyContent");
+
+				String value2 = (String)method2.invoke(oldModel, (Object[])null);
+
+				newModel.setBodyContent(value2);
+
+				Method method3 = oldModelClass.getMethod("getUserId");
+
+				Long value3 = (Long)method3.invoke(oldModel, (Object[])null);
+
+				newModel.setUserId(value3);
+
+				Method method4 = oldModelClass.getMethod("getCreateDate");
+
+				Date value4 = (Date)method4.invoke(oldModel, (Object[])null);
+
+				newModel.setCreateDate(value4);
+
+				Method method5 = oldModelClass.getMethod("getModifiedDate");
+
+				Date value5 = (Date)method5.invoke(oldModel, (Object[])null);
+
+				newModel.setModifiedDate(value5);
+
+				return newModel;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
+		}
+
+		return oldModel;
+	}
+
 	public static Object translateOutputWarrantUserUniqueId(
 		BaseModel<?> oldModel) {
 		Thread currentThread = Thread.currentThread();
@@ -459,6 +625,24 @@ public class ClpSerializer {
 				Date value4 = (Date)method4.invoke(oldModel, (Object[])null);
 
 				newModel.setModifiedDate(value4);
+
+				Method method5 = oldModelClass.getMethod("getSentEmail");
+
+				String value5 = (String)method5.invoke(oldModel, (Object[])null);
+
+				newModel.setSentEmail(value5);
+
+				Method method6 = oldModelClass.getMethod("getSentDate");
+
+				Date value6 = (Date)method6.invoke(oldModel, (Object[])null);
+
+				newModel.setSentDate(value6);
+
+				Method method7 = oldModelClass.getMethod("getSentOmicode");
+
+				String value7 = (String)method7.invoke(oldModel, (Object[])null);
+
+				newModel.setSentOmicode(value7);
 
 				return newModel;
 			}

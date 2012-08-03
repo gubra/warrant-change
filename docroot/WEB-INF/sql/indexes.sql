@@ -3,5 +3,7 @@ create index IX_560570EE on warrant (createDate, status, expirationWarningSent);
 create index IX_B7C8FF89 on warrant (status);
 create index IX_594818DD on warrant (userId);
 
+create index IX_B6E2CCB0 on warrantUserEmailLog (userId);
+
 create unique index IX_AD9C207A on warrantUserUniqueId (uniqueId);
 create index IX_84A02274 on warrantUserUniqueId (userId);

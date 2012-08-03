@@ -19,6 +19,8 @@ import java.util.List;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Order;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -84,6 +86,7 @@ public class WarrantLocalServiceImpl extends WarrantLocalServiceBaseImpl {
 	public List<Warrant> findWarrants(int start, int count) throws SystemException {
 		DynamicQuery dynamicQuery = createDynamicQuery()
 				.add(RestrictionsFactoryUtil.eq("status", WarrantStateType.CREATED.name()));
+		dynamicQuery.addOrder(OrderFactoryUtil.desc("createDate"));
 		dynamicQuery.setLimit(start, start + count);
 		return dynamicQuery(dynamicQuery);
 	}

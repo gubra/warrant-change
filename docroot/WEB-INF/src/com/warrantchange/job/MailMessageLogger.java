@@ -6,6 +6,7 @@ package com.warrantchange.job;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
@@ -30,8 +31,20 @@ public class MailMessageLogger implements MessageListener {
 //	@Override
 	public void receive(Message message) throws MessageListenerException {
 		
-		log.info(message.getPayload());
-		
+//		Object payload = message.getPayload();
+//		
+//		if(!(payload instanceof MailMessage)){
+//			return;
+//		}
+//		MailMessage mailMsg = (MailMessage)payload;
+//		
+//		String subject = mailMsg.getSubject();
+//		
+//		String body = mailMsg.getBody();
+//		
+//		if(subject != null && subject.contains("warrant")){
+//			log.info(payload);
+//		}
 
 	}
 

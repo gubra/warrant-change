@@ -12,11 +12,22 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="expirationWarningSent" type="boolean" />
 	</model>
+	<model name="com.warrantchange.model.WarrantUserEmailLog">
+		<field name="id" type="long" />
+		<field name="subject" type="String" />
+		<field name="bodyContent" type="String" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="com.warrantchange.model.WarrantUserUniqueId">
 		<field name="id" type="long" />
 		<field name="uniqueId" type="String" />
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="sentEmail" type="String" />
+		<field name="sentDate" type="Date" />
+		<field name="sentOmicode" type="String" />
 	</model>
 </model-hints>

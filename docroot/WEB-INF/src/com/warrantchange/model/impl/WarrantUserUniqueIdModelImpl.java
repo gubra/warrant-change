@@ -69,9 +69,12 @@ public class WarrantUserUniqueIdModelImpl extends BaseModelImpl<WarrantUserUniqu
 			{ "uniqueId", Types.VARCHAR },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "sentEmail", Types.VARCHAR },
+			{ "sentDate", Types.TIMESTAMP },
+			{ "sentOmicode", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table warrantUserUniqueId (id_ LONG not null primary key,uniqueId VARCHAR(75) null,userId LONG,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table warrantUserUniqueId (id_ LONG not null primary key,uniqueId VARCHAR(75) null,userId LONG,createDate DATE null,modifiedDate DATE null,sentEmail VARCHAR(75) null,sentDate DATE null,sentOmicode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table warrantUserUniqueId";
 	public static final String ORDER_BY_JPQL = " ORDER BY warrantUserUniqueId.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY warrantUserUniqueId.createDate DESC";
@@ -104,6 +107,9 @@ public class WarrantUserUniqueIdModelImpl extends BaseModelImpl<WarrantUserUniqu
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setSentEmail(soapModel.getSentEmail());
+		model.setSentDate(soapModel.getSentDate());
+		model.setSentOmicode(soapModel.getSentOmicode());
 
 		return model;
 	}
@@ -237,6 +243,43 @@ public class WarrantUserUniqueIdModelImpl extends BaseModelImpl<WarrantUserUniqu
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
+	public String getSentEmail() {
+		if (_sentEmail == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _sentEmail;
+		}
+	}
+
+	public void setSentEmail(String sentEmail) {
+		_sentEmail = sentEmail;
+	}
+
+	@JSON
+	public Date getSentDate() {
+		return _sentDate;
+	}
+
+	public void setSentDate(Date sentDate) {
+		_sentDate = sentDate;
+	}
+
+	@JSON
+	public String getSentOmicode() {
+		if (_sentOmicode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _sentOmicode;
+		}
+	}
+
+	public void setSentOmicode(String sentOmicode) {
+		_sentOmicode = sentOmicode;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -276,6 +319,9 @@ public class WarrantUserUniqueIdModelImpl extends BaseModelImpl<WarrantUserUniqu
 		warrantUserUniqueIdImpl.setUserId(getUserId());
 		warrantUserUniqueIdImpl.setCreateDate(getCreateDate());
 		warrantUserUniqueIdImpl.setModifiedDate(getModifiedDate());
+		warrantUserUniqueIdImpl.setSentEmail(getSentEmail());
+		warrantUserUniqueIdImpl.setSentDate(getSentDate());
+		warrantUserUniqueIdImpl.setSentOmicode(getSentOmicode());
 
 		warrantUserUniqueIdImpl.resetOriginalValues();
 
@@ -374,12 +420,37 @@ public class WarrantUserUniqueIdModelImpl extends BaseModelImpl<WarrantUserUniqu
 			warrantUserUniqueIdCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		warrantUserUniqueIdCacheModel.sentEmail = getSentEmail();
+
+		String sentEmail = warrantUserUniqueIdCacheModel.sentEmail;
+
+		if ((sentEmail != null) && (sentEmail.length() == 0)) {
+			warrantUserUniqueIdCacheModel.sentEmail = null;
+		}
+
+		Date sentDate = getSentDate();
+
+		if (sentDate != null) {
+			warrantUserUniqueIdCacheModel.sentDate = sentDate.getTime();
+		}
+		else {
+			warrantUserUniqueIdCacheModel.sentDate = Long.MIN_VALUE;
+		}
+
+		warrantUserUniqueIdCacheModel.sentOmicode = getSentOmicode();
+
+		String sentOmicode = warrantUserUniqueIdCacheModel.sentOmicode;
+
+		if ((sentOmicode != null) && (sentOmicode.length() == 0)) {
+			warrantUserUniqueIdCacheModel.sentOmicode = null;
+		}
+
 		return warrantUserUniqueIdCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -391,13 +462,19 @@ public class WarrantUserUniqueIdModelImpl extends BaseModelImpl<WarrantUserUniqu
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", sentEmail=");
+		sb.append(getSentEmail());
+		sb.append(", sentDate=");
+		sb.append(getSentDate());
+		sb.append(", sentOmicode=");
+		sb.append(getSentOmicode());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.warrantchange.model.WarrantUserUniqueId");
@@ -423,6 +500,18 @@ public class WarrantUserUniqueIdModelImpl extends BaseModelImpl<WarrantUserUniqu
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>sentEmail</column-name><column-value><![CDATA[");
+		sb.append(getSentEmail());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>sentDate</column-name><column-value><![CDATA[");
+		sb.append(getSentDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>sentOmicode</column-name><column-value><![CDATA[");
+		sb.append(getSentOmicode());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -442,6 +531,9 @@ public class WarrantUserUniqueIdModelImpl extends BaseModelImpl<WarrantUserUniqu
 	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _sentEmail;
+	private Date _sentDate;
+	private String _sentOmicode;
 	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private WarrantUserUniqueId _escapedModelProxy;

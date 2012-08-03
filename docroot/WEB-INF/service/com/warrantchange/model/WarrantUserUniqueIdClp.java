@@ -109,6 +109,30 @@ public class WarrantUserUniqueIdClp extends BaseModelImpl<WarrantUserUniqueId>
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getSentEmail() {
+		return _sentEmail;
+	}
+
+	public void setSentEmail(String sentEmail) {
+		_sentEmail = sentEmail;
+	}
+
+	public Date getSentDate() {
+		return _sentDate;
+	}
+
+	public void setSentDate(Date sentDate) {
+		_sentDate = sentDate;
+	}
+
+	public String getSentOmicode() {
+		return _sentOmicode;
+	}
+
+	public void setSentOmicode(String sentOmicode) {
+		_sentOmicode = sentOmicode;
+	}
+
 	public void persist() throws SystemException {
 		if (this.isNew()) {
 			WarrantUserUniqueIdLocalServiceUtil.addWarrantUserUniqueId(this);
@@ -134,6 +158,9 @@ public class WarrantUserUniqueIdClp extends BaseModelImpl<WarrantUserUniqueId>
 		clone.setUserId(getUserId());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
+		clone.setSentEmail(getSentEmail());
+		clone.setSentDate(getSentDate());
+		clone.setSentOmicode(getSentOmicode());
 
 		return clone;
 	}
@@ -185,7 +212,7 @@ public class WarrantUserUniqueIdClp extends BaseModelImpl<WarrantUserUniqueId>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{id=");
 		sb.append(getId());
@@ -197,13 +224,19 @@ public class WarrantUserUniqueIdClp extends BaseModelImpl<WarrantUserUniqueId>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", sentEmail=");
+		sb.append(getSentEmail());
+		sb.append(", sentDate=");
+		sb.append(getSentDate());
+		sb.append(", sentOmicode=");
+		sb.append(getSentOmicode());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.warrantchange.model.WarrantUserUniqueId");
@@ -229,6 +262,18 @@ public class WarrantUserUniqueIdClp extends BaseModelImpl<WarrantUserUniqueId>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>sentEmail</column-name><column-value><![CDATA[");
+		sb.append(getSentEmail());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>sentDate</column-name><column-value><![CDATA[");
+		sb.append(getSentDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>sentOmicode</column-name><column-value><![CDATA[");
+		sb.append(getSentOmicode());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -241,4 +286,7 @@ public class WarrantUserUniqueIdClp extends BaseModelImpl<WarrantUserUniqueId>
 	private String _userUuid;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _sentEmail;
+	private Date _sentDate;
+	private String _sentOmicode;
 }
