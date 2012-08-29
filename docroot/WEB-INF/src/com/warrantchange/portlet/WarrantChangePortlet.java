@@ -50,6 +50,8 @@ public class WarrantChangePortlet extends MVCPortlet {
 	private static final Log _log = LogFactory.getLog(MVCPortlet.class);
 	
 	String regex;
+	
+	Double minPrice;
 
 	public WarrantChangePortlet() {
 	}
@@ -57,13 +59,26 @@ public class WarrantChangePortlet extends MVCPortlet {
 	@Override
 	public void init() throws PortletException {
 		super.init();
+
 //		MessageBusUtil.registerMessageListener(
 //				DestinationNames.MAIL, new MailMessageLogger());
 		
 		regex = this.getInitParameter("regex");
 		
+		String minPriceString = this.getInitParameter("minPrice");
+		
+		try{
+			minPrice = minPriceString == null ? 1.0 : Double.parseDouble(minPriceString);
+		}catch(Exception e){
+			_log.error("minPrice Error !", e);
+		}
+		
 		if(regex == null){
 			regex = "2manysecrets";
+		}
+		
+		if(minPrice == null){
+			minPrice = new Double(1.0);
 		}
 		
 //		try {
@@ -73,6 +88,7 @@ public class WarrantChangePortlet extends MVCPortlet {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+	
 	}
 	
 	private void logParameters(ActionRequest actionRequest, 
@@ -164,6 +180,11 @@ public class WarrantChangePortlet extends MVCPortlet {
 		
 		if(price < 0){
 			SessionErrors.add(actionRequest, "price-required");
+			return;
+		}
+		
+		if(price < minPrice){
+			SessionErrors.add(actionRequest, "price-min-price");
 			return;
 		}
 

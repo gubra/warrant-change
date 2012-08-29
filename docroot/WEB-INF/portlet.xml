@@ -25,6 +25,10 @@
 			<name>regex</name>
 			<value>2manysecrets</value>
 		</init-param>
+		<init-param>
+			<name>minPrice</name>
+			<value>1.0</value>
+		</init-param>		
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
