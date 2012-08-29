@@ -131,7 +131,7 @@ boolean male = ParamUtil.getBoolean(request, "male", true);
 
 				<%
 		
-				Locale[] locales = new Locale[] {new Locale("en","UK"),new Locale("hu","HU"),new Locale("cs","CZ"),new Locale("sk","SK"),new Locale("pl","PL"),new Locale("uk","UA")};
+				Locale[] locales = new Locale[] {new Locale("en","UK"),new Locale("hu","HU"),new Locale("cs","CZ"),new Locale("sk","SK"),new Locale("pl","PL")};
 				//LanguageUtil.getAvailableLocales();
 		
 				//Locale locale = LanguageUtil.getLocale(LanguageUtil.getLanguageId(request));

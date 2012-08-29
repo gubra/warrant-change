@@ -65,6 +65,8 @@ public class CreateAccountAction extends BaseStrutsPortletAction {
 		
 			if(warrantUserUniqueID != null){
 				
+				System.out.println("warrantUserUniqueID: " + warrantUserUniqueID);
+				
 				originalStrutsPortletAction.processAction(originalStrutsPortletAction,
 						portletConfig, actionRequest, actionResponse);
 

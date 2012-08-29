@@ -211,6 +211,10 @@ doubleFormat.setGroupingUsed(false);
 doubleFormat.setMaximumFractionDigits(2);
 doubleFormat.setMinimumFractionDigits(2);
 
+String minPrice = portletConfig.getInitParameter("minPrice");
+
+String minPriceText = "햞 (EUR/db) (Min: "+minPrice+" EUR)";
+
 %>
 
 <c:choose>
@@ -270,7 +274,7 @@ doubleFormat.setMinimumFractionDigits(2);
 			</aui:validator>
 		</aui:input>
 
-		<aui:input field="price" name="price" helpMessage="햞 (EUR/db)" label="햞 (EUR/db)">
+		<aui:input field="price" name="price" helpMessage="햞 (EUR/db)" label="<%=minPriceText %>">
 			<aui:validator name="required"/>
 		</aui:input>
 		
